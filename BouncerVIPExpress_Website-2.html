@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bouncer VIP Express (Pty) Ltd — Professional Nightlife Security</title>
+<meta name="description" content="South Africa's premier dedicated nightlife security provider. PSIRA-certified bouncers for bars, nightclubs, lounges and entertainment venues across KZN, Gauteng and the Western Cape."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Barlow:wght@300;400;500;600;700;800&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM
+═══════════════════════════════════════════════════════════════════ */
+:root {
+  --gold:    #C9A84C;
+  --gold2:   #E8C96A;
+  --gold3:   #F5E6B8;
+  --golddim: rgba(201,168,76,0.12);
+  --red:     #B5222A;
+  --red2:    #D42B35;
+  --black:   #080808;
+  --ink:     #0E0E0E;
+  --g1:      #111111;
+  --g2:      #161616;
+  --g3:      #1E1E1E;
+  --g4:      #2A2A2A;
+  --g5:      #3A3A3A;
+  --g6:      #666666;
+  --g7:      #999999;
+  --g8:      #CCCCCC;
+  --white:   #FFFFFF;
+  --nav-h:   72px;
+  --fs-xs:   0.72rem;
+  --fs-sm:   0.85rem;
+  --fs-base: 1rem;
+  --fs-md:   1.1rem;
+  --fs-lg:   1.35rem;
+  --fs-xl:   1.75rem;
+  --fs-2xl:  2.4rem;
+  --fs-3xl:  3.5rem;
+  --fs-4xl:  5rem;
+  --fs-hero: clamp(3.2rem, 8vw, 7.5rem);
+  --ease:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease2:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--g1); }
+::-webkit-scrollbar-thumb { background:var(--gold); border-radius:0; }
+
+/* ── SELECTION ── */
+::selection { background:var(--gold); color:var(--black); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════════════ */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:900;
+  height: var(--nav-h);
+  display: flex; align-items:center;
+  padding: 0 clamp(1.5rem,5vw,5rem);
+  background: rgba(8,8,8,0.92);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  transition: border-color 0.4s;
+}
+
+nav.scrolled { border-color: rgba(201,168,76,0.35); }
+
+.nav-brand {
+  display:flex; align-items:center; gap:14px;
+  text-decoration:none; flex-shrink:0;
+}
+
+.nav-shield {
+  width:38px; height:38px;
+  display:flex; align-items:center; justify-content:center;
+}
+
+.nav-shield svg { width:100%; height:100%; }
+
+.nav-wordmark { display:flex; flex-direction:column; line-height:1; }
+
+.nav-wordmark-top {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800; font-size:1.1rem;
+  letter-spacing:0.12em;
+  color: var(--gold);
+}
+
+.nav-wordmark-bot {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600; font-size:0.62rem;
+  letter-spacing:0.18em;
+  color: var(--g7);
+}
+
+.nav-links {
+  display:flex; align-items:center; gap:0.25rem;
+  margin-left:auto;
+  list-style:none;
+}
+
+.nav-links a {
+  display:block; padding:0.5rem 1rem;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600; font-size:0.8rem;
+  letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--g8); text-decoration:none;
+  transition:color 0.25s;
+  position:relative;
+}
+
+.nav-links a::after {
+  content:''; position:absolute; bottom:-2px; left:1rem; right:1rem;
+  height:1px; background:var(--gold);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform 0.3s var(--ease);
+}
+
+.nav-links a:hover, .nav-links a.active { color:var(--gold); }
+.nav-links a:hover::after, .nav-links a.active::after { transform:scaleX(1); }
+
+.nav-cta {
+  margin-left:1.5rem;
+  padding:0.55rem 1.5rem;
+  background:var(--gold);
+  color:var(--black) !important;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:0.78rem;
+  letter-spacing:0.16em; text-transform:uppercase;
+  text-decoration:none;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition:background 0.25s, transform 0.2s !important;
+}
+
+.nav-cta::after { display:none !important; }
+.nav-cta:hover { background:var(--gold2) !important; transform:translateY(-1px); }
+
+.nav-toggle {
+  display:none; flex-direction:column; gap:5px;
+  margin-left:auto; cursor:pointer; padding:8px;
+  background:none; border:none;
+}
+
+.nav-toggle span {
+  display:block; width:24px; height:2px;
+  background:var(--gold); border-radius:0;
+  transition:all 0.3s var(--ease);
+}
+
+.nav-toggle.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+.nav-toggle.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+.nav-mobile {
+  display:none; position:fixed;
+  top:var(--nav-h); left:0; right:0;
+  background:rgba(8,8,8,0.98);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--golddim);
+  z-index:899; padding:1.5rem 2rem 2rem;
+  flex-direction:column; gap:0.5rem;
+  transform:translateY(-10px); opacity:0;
+  transition:all 0.35s var(--ease);
+}
+
+.nav-mobile.open {
+  display:flex; transform:translateY(0); opacity:1;
+}
+
+.nav-mobile a {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600; font-size:1.1rem;
+  letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--g8); text-decoration:none;
+  padding:0.75rem 0;
+  border-bottom:1px solid var(--g3);
+  transition:color 0.2s;
+}
+
+.nav-mobile a:hover { color:var(--gold); }
+.nav-mobile .nav-cta-mob {
+  margin-top:1rem; padding:1rem;
+  background:var(--gold); color:var(--black);
+  text-align:center; border-bottom:none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PAGE SYSTEM
+═══════════════════════════════════════════════════════════════════ */
+.page { display:none; }
+.page.active { display:block; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   SHARED SECTION ELEMENTS
+═══════════════════════════════════════════════════════════════════ */
+.section {
+  padding: clamp(5rem,10vw,9rem) clamp(1.5rem,8vw,8rem);
+  position:relative;
+}
+
+.section-alt { background:var(--g1); }
+
+.section-tag {
+  display:inline-flex; align-items:center; gap:12px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:var(--fs-xs);
+  letter-spacing:0.3em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1.2rem;
+}
+
+.section-tag::before {
+  content:''; width:32px; height:1px; background:var(--gold);
+}
+
+.section-title {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700; font-size:clamp(2.2rem,5vw,3.8rem);
+  line-height:1.05; letter-spacing:-0.01em;
+  margin-bottom:1rem;
+}
+
+.section-title em { color:var(--gold); font-style:italic; }
+
+.section-lead {
+  font-size:var(--fs-md); color:var(--g7);
+  max-width:560px; line-height:1.75; margin-bottom:3rem;
+}
+
+.gold-line {
+  display:block; width:60px; height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));
+  margin:1.5rem 0;
+}
+
+/* ── BUTTONS ── */
+.btn {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:1rem 2.4rem;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:0.82rem;
+  letter-spacing:0.18em; text-transform:uppercase;
+  text-decoration:none; cursor:pointer;
+  border:none; transition:all 0.3s var(--ease);
+  position:relative; overflow:hidden;
+}
+
+.btn-gold {
+  background:var(--gold); color:var(--black);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.btn-gold:hover { background:var(--gold2); transform:translateY(-2px); }
+
+.btn-outline {
+  background:transparent; color:var(--gold);
+  border:1px solid var(--gold);
+}
+.btn-outline:hover { background:var(--golddim); }
+
+.btn-red {
+  background:var(--red); color:var(--white);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.btn-red:hover { background:var(--red2); transform:translateY(-2px); }
+
+.btn-arrow::after { content:'→'; font-size:1rem; }
+
+/* ── CARDS ── */
+.card {
+  background:var(--g2);
+  border:1px solid var(--g4);
+  padding:2.5rem 2rem;
+  transition:border-color 0.3s, transform 0.3s var(--ease);
+  position:relative; overflow:hidden;
+}
+
+.card::before {
+  content:''; position:absolute; top:0; left:0; right:0;
+  height:2px; background:linear-gradient(90deg,var(--gold),transparent);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform 0.4s var(--ease);
+}
+
+.card:hover { border-color:var(--gold); transform:translateY(-4px); }
+.card:hover::before { transform:scaleX(1); }
+
+/* ── GRID LAYOUTS ── */
+.grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
+
+/* ── DIVIDER ── */
+.divider {
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--g4),transparent);
+  margin:0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PAGE: HOME
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh; position:relative;
+  display:flex; align-items:center;
+  padding-top:var(--nav-h);
+  overflow:hidden;
+}
+
+.hero-bg {
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 100% 80% at 100% 0%, rgba(201,168,76,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(181,34,42,0.06) 0%, transparent 60%),
+    linear-gradient(180deg, var(--black) 0%, var(--g1) 100%);
+}
+
+/* Geometric grid lines */
+.hero-grid {
+  position:absolute; inset:0; z-index:0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 80% 80% at 80% 50%, black 20%, transparent 80%);
+}
+
+.hero-content {
+  position:relative; z-index:2;
+  padding: clamp(4rem,8vw,8rem) clamp(1.5rem,8vw,8rem);
+  max-width:1400px; width:100%;
+}
+
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:12px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600; font-size:var(--fs-xs);
+  letter-spacing:0.4em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:2.5rem;
+}
+
+.hero-eyebrow-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--gold);
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform:scale(1); opacity:1; }
+  50% { transform:scale(1.6); opacity:0.5; }
+}
+
+.hero-title {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700;
+  font-size:var(--fs-hero);
+  line-height:0.95; letter-spacing:-0.02em;
+  margin-bottom:1.5rem;
+}
+
+.hero-title-gold { color:var(--gold); display:block; }
+.hero-title-white { color:var(--white); display:block; }
+.hero-title-outline {
+  display:block;
+  -webkit-text-stroke:1px var(--g5);
+  color:transparent;
+  font-style:italic;
+}
+
+.hero-sub {
+  font-size:clamp(1rem,2vw,1.2rem);
+  color:var(--g7); max-width:520px;
+  line-height:1.7; margin-bottom:3rem;
+  font-weight:300;
+}
+
+.hero-cta { display:flex; flex-wrap:wrap; gap:1rem; margin-bottom:4rem; }
+
+/* Hero stats bar */
+.hero-stats {
+  display:flex; flex-wrap:wrap; gap:0;
+  border-top:1px solid var(--g4);
+  padding-top:2.5rem;
+}
+
+.hero-stat {
+  flex:1; min-width:140px;
+  padding:0 2rem 0 0;
+  border-right:1px solid var(--g4);
+  margin-right:2rem;
+}
+
+.hero-stat:last-child { border-right:none; margin-right:0; }
+
+.hero-stat-num {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800; font-size:2.4rem;
+  color:var(--gold); letter-spacing:-0.02em;
+  line-height:1;
+}
+
+.hero-stat-label {
+  font-size:var(--fs-xs); color:var(--g6);
+  text-transform:uppercase; letter-spacing:0.15em;
+  margin-top:4px;
+}
+
+/* ── HOME INTRO SPLIT ── */
+.intro-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:0; align-items:stretch;
+}
+
+.intro-left {
+  padding: clamp(4rem,8vw,7rem) clamp(1.5rem,6vw,6rem);
+  background:var(--g1);
+  border-right:1px solid var(--g4);
+}
+
+.intro-right {
+  padding: clamp(4rem,8vw,7rem) clamp(1.5rem,6vw,6rem);
+  background:var(--g2);
+  display:flex; flex-direction:column; justify-content:center;
+}
+
+.intro-pillars { display:flex; flex-direction:column; gap:1.5rem; }
+
+.intro-pillar {
+  display:flex; gap:1.5rem; align-items:flex-start;
+  padding:1.5rem;
+  background:var(--g1);
+  border:1px solid var(--g4);
+  border-left:3px solid var(--gold);
+  transition:border-color 0.3s, transform 0.3s var(--ease);
+}
+
+.intro-pillar:hover { border-color:var(--gold); transform:translateX(4px); }
+
+.intro-pillar-icon {
+  width:44px; height:44px; flex-shrink:0;
+  background:var(--golddim);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem;
+}
+
+.intro-pillar-head {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:1rem;
+  letter-spacing:0.05em; color:var(--gold);
+  text-transform:uppercase; margin-bottom:0.35rem;
+}
+
+.intro-pillar-body { font-size:0.88rem; color:var(--g7); line-height:1.65; }
+
+/* ── HOME VENUE TYPES ── */
+.venue-types-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1px;
+  background:var(--g4);
+  border:1px solid var(--g4);
+}
+
+.venue-type-item {
+  background:var(--g2); padding:2.5rem 2rem;
+  display:flex; flex-direction:column; align-items:flex-start;
+  gap:1rem;
+  transition:background 0.3s;
+  cursor:default;
+}
+
+.venue-type-item:hover { background:var(--g3); }
+
+.venue-type-num {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800; font-size:2.2rem;
+  color:var(--g4); line-height:1;
+}
+
+.venue-type-name {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:1.05rem;
+  letter-spacing:0.05em; text-transform:uppercase;
+  color:var(--white);
+}
+
+.venue-type-bar {
+  width:32px; height:2px; background:var(--gold);
+  transition:width 0.4s var(--ease);
+}
+
+.venue-type-item:hover .venue-type-bar { width:100%; }
+
+/* ── HOME TIER PREVIEW ── */
+.tier-preview-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1px; background:var(--g4);
+}
+
+.tier-prev {
+  background:var(--g2); padding:3rem 2.5rem;
+  display:flex; flex-direction:column;
+  transition:background 0.3s;
+  position:relative; overflow:hidden;
+}
+
+.tier-prev::after {
+  content:''; position:absolute;
+  bottom:0; left:0; right:0; height:3px;
+  background:var(--tier-color, var(--gold));
+  transform:scaleX(0); transform-origin:left;
+  transition:transform 0.4s var(--ease);
+}
+
+.tier-prev:hover { background:var(--g3); }
+.tier-prev:hover::after { transform:scaleX(1); }
+
+.tier-prev-label {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600; font-size:var(--fs-xs);
+  letter-spacing:0.3em; text-transform:uppercase;
+  color:var(--tier-color, var(--gold));
+  margin-bottom:1.5rem;
+}
+
+.tier-prev-rate {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700; font-size:2.8rem;
+  color:var(--white); line-height:1;
+}
+
+.tier-prev-unit {
+  font-size:var(--fs-sm); color:var(--g6);
+  margin-bottom:1.5rem;
+}
+
+.tier-prev-venues {
+  font-size:var(--fs-sm); color:var(--g7);
+  margin-top:auto;
+  padding-top:1.5rem;
+  border-top:1px solid var(--g4);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PAGE: SERVICES
+═══════════════════════════════════════════════════════════════════ */
+.page-hero {
+  min-height:50vh; display:flex; align-items:flex-end;
+  padding: var(--nav-h) clamp(1.5rem,8vw,8rem) 4rem;
+  position:relative; overflow:hidden;
+  background:var(--g1);
+}
+
+.page-hero-bg {
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(201,168,76,0.06) 0%, transparent 70%),
+    linear-gradient(180deg, var(--black) 0%, var(--g2) 100%);
+}
+
+.page-hero-accent {
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--gold), var(--red), var(--gold));
+}
+
+.page-hero-content { position:relative; z-index:2; }
+
+.page-hero-title {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700;
+  font-size:clamp(3rem,7vw,6rem);
+  line-height:0.95; letter-spacing:-0.02em;
+  margin-bottom:1rem;
+}
+
+.page-hero-sub {
+  font-size:var(--fs-md); color:var(--g7);
+  max-width:540px; font-weight:300;
+}
+
+/* ── SERVICES DETAIL ── */
+.services-layout {
+  display:grid; grid-template-columns:1fr 2fr;
+  gap:0; align-items:start;
+}
+
+.services-nav {
+  position:sticky; top:calc(var(--nav-h) + 2rem);
+  padding: 3rem 3rem 3rem clamp(1.5rem,8vw,8rem);
+  display:flex; flex-direction:column; gap:0.25rem;
+}
+
+.service-nav-item {
+  padding:1rem 1.25rem;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600; font-size:0.85rem;
+  letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--g6); cursor:pointer;
+  border-left:2px solid transparent;
+  transition:all 0.25s;
+}
+
+.service-nav-item:hover { color:var(--gold); border-color:var(--gold); }
+.service-nav-item.active { color:var(--gold); border-color:var(--gold); background:var(--golddim); }
+
+.services-content {
+  padding: 4rem clamp(1.5rem,6vw,6rem) 4rem 0;
+  border-left:1px solid var(--g4);
+}
+
+.service-block {
+  display:none; animation:fadeIn 0.4s var(--ease);
+}
+.service-block.active { display:block; }
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+.service-block-header {
+  display:flex; align-items:flex-start; gap:2rem;
+  margin-bottom:3rem;
+  padding-bottom:3rem;
+  border-bottom:1px solid var(--g4);
+}
+
+.service-block-icon {
+  width:72px; height:72px; flex-shrink:0;
+  background:var(--golddim);
+  border:1px solid rgba(201,168,76,0.25);
+  display:flex; align-items:center; justify-content:center;
+  font-size:2rem;
+}
+
+.service-block-title {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700; font-size:2.5rem;
+  line-height:1; margin-bottom:0.75rem;
+}
+
+.service-block-sub { color:var(--g7); font-size:var(--fs-md); font-weight:300; }
+
+.service-feature-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1.5rem; margin-bottom:3rem;
+}
+
+.service-feature {
+  padding:1.75rem;
+  background:var(--g2); border:1px solid var(--g4);
+  border-left:2px solid var(--gold);
+}
+
+.service-feature-head {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:0.9rem;
+  letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:0.5rem;
+}
+
+.service-feature-body { font-size:0.88rem; color:var(--g7); line-height:1.6; }
+
+.venue-tag-list { display:flex; flex-wrap:wrap; gap:0.5rem; }
+
+.venue-tag {
+  padding:0.4rem 1rem;
+  background:var(--g3); border:1px solid var(--g5);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.78rem; font-weight:600;
+  letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--g8);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PAGE: PRICING
+═══════════════════════════════════════════════════════════════════ */
+.pricing-intro {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:4rem; align-items:center;
+  margin-bottom:5rem;
+}
+
+/* Nightly tiers */
+.nightly-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:0; background:var(--g4);
+  margin-bottom:5rem;
+}
+
+.nightly-tier {
+  background:var(--g2); padding:3.5rem 2.5rem;
+  display:flex; flex-direction:column;
+  position:relative; overflow:hidden;
+}
+
+.nightly-tier.featured {
+  background:var(--g1);
+  border:1px solid rgba(201,168,76,0.4);
+  z-index:1;
+  transform:scaleY(1.01);
+}
+
+.nightly-tier-badge {
+  position:absolute; top:0; left:0; right:0;
+  padding:0.4rem;
+  background:var(--gold);
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:0.68rem;
+  letter-spacing:0.3em; text-transform:uppercase;
+  color:var(--black); text-align:center;
+}
+
+.nightly-tier-name {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:0.72rem;
+  letter-spacing:0.3em; text-transform:uppercase;
+  color:var(--g7); margin-bottom:1.5rem;
+}
+
+.nightly-tier.featured .nightly-tier-name { margin-top:2rem; }
+
+.nightly-rate {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700; font-size:3.8rem;
+  line-height:1; color:var(--white);
+  margin-bottom:0.25rem;
+}
+
+.nightly-rate-currency { font-size:2rem; vertical-align:super; }
+
+.nightly-rate-period {
+  font-size:var(--fs-sm); color:var(--g6);
+  margin-bottom:0.75rem;
+}
+
+.nightly-tier-color-bar {
+  width:40px; height:2px; margin:1.5rem 0;
+}
+
+.nightly-venues {
+  font-size:var(--fs-sm); color:var(--g6);
+  margin-bottom:1rem;
+}
+
+.nightly-bouncers {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:0.85rem;
+  color:var(--gold); letter-spacing:0.05em;
+  margin-bottom:2rem;
+}
+
+.pricing-features { display:flex; flex-direction:column; gap:0.75rem; margin-bottom:2.5rem; }
+
+.pricing-feature {
+  display:flex; align-items:flex-start; gap:0.75rem;
+  font-size:0.87rem; color:var(--g8); line-height:1.5;
+}
+
+.pricing-feature::before {
+  content:''; width:16px; height:16px; flex-shrink:0;
+  border:1px solid var(--gold); margin-top:2px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--golddim);
+}
+
+/* Retainer section */
+.retainer-section {
+  padding: clamp(4rem,8vw,7rem) clamp(1.5rem,8vw,8rem);
+  background:var(--g1);
+  position:relative;
+}
+
+.retainer-section::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+.retainer-intro {
+  display:grid; grid-template-columns:1fr 1.4fr;
+  gap:5rem; align-items:center; margin-bottom:4rem;
+}
+
+.retainer-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+
+.retainer-card {
+  background:var(--g2);
+  border:1px solid var(--g4);
+  overflow:hidden;
+}
+
+.retainer-card-header {
+  padding:2rem 2rem 1.5rem;
+  border-bottom:1px solid var(--g4);
+  position:relative;
+}
+
+.retainer-card-accent {
+  position:absolute; top:0; left:0; right:0; height:3px;
+}
+
+.retainer-card-name {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:0.72rem;
+  letter-spacing:0.3em; text-transform:uppercase;
+  color:var(--g7); margin-bottom:1rem;
+}
+
+.retainer-monthly-rate {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700; font-size:2.8rem;
+  color:var(--white); line-height:1;
+  margin-bottom:0.25rem;
+}
+
+.retainer-monthly-label { font-size:var(--fs-sm); color:var(--g6); }
+
+.retainer-saving {
+  display:inline-block;
+  margin-top:0.75rem; padding:0.25rem 0.75rem;
+  background:rgba(181,34,42,0.15);
+  border:1px solid var(--red);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem; font-weight:700;
+  letter-spacing:0.1em; color:var(--red);
+  text-transform:uppercase;
+}
+
+.retainer-card-body {
+  padding:1.75rem 2rem;
+}
+
+.retainer-included { display:flex; flex-direction:column; gap:0.6rem; }
+
+.retainer-item {
+  display:flex; align-items:center; gap:0.75rem;
+  font-size:0.87rem; color:var(--g8);
+}
+
+.retainer-item-dot {
+  width:6px; height:6px; border-radius:50%; flex-shrink:0;
+}
+
+/* Comparison table */
+.compare-table {
+  width:100%; border-collapse:collapse;
+  margin-top:4rem;
+}
+
+.compare-table th {
+  padding:1.2rem 1.5rem;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:0.78rem;
+  letter-spacing:0.15em; text-transform:uppercase;
+  text-align:left; background:var(--g3);
+  border-bottom:2px solid var(--gold);
+}
+
+.compare-table th:first-child { width:35%; }
+.compare-table th.bve-col { color:var(--gold); }
+
+.compare-table td {
+  padding:1rem 1.5rem;
+  font-size:0.9rem; color:var(--g7);
+  border-bottom:1px solid var(--g3);
+}
+
+.compare-table tr:hover td { background:rgba(255,255,255,0.02); }
+
+.compare-table td.factor { color:var(--white); font-weight:500; }
+.compare-table td.bve-win { color:var(--gold); font-weight:600; }
+.compare-table td.win { color:#5BAD6F; }
+.compare-table td.lose { color:var(--g5); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   PAGE: COVERAGE
+═══════════════════════════════════════════════════════════════════ */
+.coverage-layout {
+  display:grid; grid-template-columns:1fr 1.2fr;
+  gap:0; align-items:stretch;
+}
+
+.coverage-left {
+  padding: clamp(3rem,6vw,6rem) clamp(1.5rem,5vw,5rem);
+  background:var(--g1);
+}
+
+.coverage-right {
+  padding: clamp(3rem,6vw,6rem) clamp(1.5rem,5vw,5rem);
+}
+
+.region-accordion { display:flex; flex-direction:column; gap:0; }
+
+.region-item {
+  border-bottom:1px solid var(--g4);
+  overflow:hidden;
+}
+
+.region-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:2rem 0; cursor:pointer;
+  transition:color 0.25s;
+}
+
+.region-header:hover .region-name { color:var(--gold); }
+
+.region-num {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800; font-size:3rem;
+  color:var(--g3); line-height:1; margin-right:1.5rem;
+  transition:color 0.3s;
+}
+
+.region-item.open .region-num { color:var(--golddim); }
+
+.region-name-block { flex:1; }
+
+.region-name {
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700; font-size:1.8rem;
+  line-height:1; transition:color 0.25s;
+}
+
+.region-status {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem; font-weight:700;
+  letter-spacing:0.2em; text-transform:uppercase;
+  margin-top:4px;
+}
+
+.region-toggle {
+  width:32px; height:32px; border:1px solid var(--g5);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.2rem; color:var(--g6);
+  transition:all 0.3s var(--ease); flex-shrink:0;
+}
+
+.region-item.open .region-toggle {
+  border-color:var(--gold); color:var(--gold);
+  transform:rotate(45deg);
+}
+
+.region-body {
+  max-height:0; overflow:hidden;
+  transition:max-height 0.45s var(--ease), padding 0.45s;
+  padding:0;
+}
+
+.region-item.open .region-body {
+  max-height:400px; padding-bottom:2rem;
+}
+
+.region-desc { color:var(--g7); font-size:0.9rem; line-height:1.7; margin-bottom:1.5rem; }
+
+.region-cities { display:flex; flex-wrap:wrap; gap:0.5rem; }
+
+.region-city {
+  padding:0.35rem 0.9rem;
+  border:1px solid var(--g5);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.78rem; font-weight:600;
+  letter-spacing:0.08em; color:var(--g8);
+  text-transform:uppercase;
+}
+
+/* Coverage stats */
+.coverage-stats { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+
+.coverage-stat-card {
+  padding:2.5rem 2rem;
+  background:var(--g2); border:1px solid var(--g4);
+  border-top:2px solid var(--gold);
+}
+
+.coverage-stat-num {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800; font-size:2.8rem;
+  color:var(--gold); line-height:1; margin-bottom:0.5rem;
+}
+
+.coverage-stat-label { font-size:var(--fs-sm); color:var(--g7); }
+
+/* Phase timeline */
+.phase-timeline { margin-top:4rem; }
+
+.phase-item {
+  display:flex; gap:2rem;
+  padding:2rem 0;
+  border-bottom:1px solid var(--g4);
+  align-items:flex-start;
+}
+
+.phase-num-block {
+  width:60px; height:60px; flex-shrink:0;
+  border:2px solid var(--g4);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-weight:700; font-size:1.8rem;
+  color:var(--gold);
+  transition:border-color 0.3s, background 0.3s;
+}
+
+.phase-item:hover .phase-num-block {
+  border-color:var(--gold);
+  background:var(--golddim);
+}
+
+.phase-head {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:1rem;
+  letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--white); margin-bottom:0.25rem;
+}
+
+.phase-period { font-size:var(--fs-sm); color:var(--gold); margin-bottom:0.5rem; }
+.phase-desc { font-size:0.88rem; color:var(--g7); line-height:1.6; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   PAGE: WHY US
+═══════════════════════════════════════════════════════════════════ */
+.why-hero-split {
+  display:grid; grid-template-columns:1.2fr 1fr;
+  gap:0; min-height:60vh; align-items:stretch;
+}
+
+.why-left {
+  padding: clamp(5rem,8vw,8rem) clamp(1.5rem,6vw,6rem);
+  background:var(--g1);
+  display:flex; flex-direction:column; justify-content:center;
+}
+
+.why-right {
+  background:var(--g2);
+  display:flex; align-items:center; justify-content:center;
+  padding:3rem;
+  border-left:1px solid var(--g4);
+}
+
+.compliance-visual {
+  width:100%; max-width:360px;
+  display:flex; flex-direction:column; gap:1rem;
+}
+
+.compliance-item {
+  display:flex; align-items:center; gap:1.5rem;
+  padding:1.5rem;
+  background:var(--g1); border:1px solid var(--g4);
+  transition:border-color 0.3s, transform 0.3s var(--ease);
+}
+
+.compliance-item:hover { border-color:var(--gold); transform:translateX(6px); }
+
+.compliance-check {
+  width:36px; height:36px; flex-shrink:0;
+  background:var(--golddim); border:1px solid rgba(201,168,76,0.3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem; color:var(--gold);
+}
+
+.compliance-text { font-size:0.9rem; color:var(--white); line-height:1.4; }
+.compliance-text span { display:block; font-size:0.78rem; color:var(--g6); margin-top:2px; }
+
+/* Differentiators grid */
+.diff-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:0; background:var(--g4);
+}
+
+.diff-item {
+  background:var(--g2); padding:3rem 2rem;
+  border-top:2px solid transparent;
+  transition:background 0.3s, border-color 0.3s;
+}
+
+.diff-item:hover { background:var(--g3); border-color:var(--gold); }
+
+.diff-icon { font-size:2rem; margin-bottom:1.5rem; }
+.diff-head {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:1rem;
+  letter-spacing:0.06em; color:var(--gold);
+  text-transform:uppercase; margin-bottom:0.75rem;
+}
+.diff-body { font-size:0.86rem; color:var(--g7); line-height:1.65; }
+
+/* Testimonial */
+.testimonial-strip {
+  padding: clamp(4rem,7vw,6rem) clamp(1.5rem,8vw,8rem);
+  background:var(--g3);
+  text-align:center;
+  position:relative;
+}
+
+.testimonial-strip::before {
+  content:'\201C';
+  position:absolute; top:-0.5rem; left:50%; transform:translateX(-50%);
+  font-family:'Cormorant Garamond',serif;
+  font-size:10rem; color:rgba(201,168,76,0.08);
+  line-height:1; pointer-events:none;
+}
+
+.testimonial-text {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic; font-size:clamp(1.4rem,3vw,2.2rem);
+  color:var(--white); max-width:800px; margin:0 auto 2rem;
+  line-height:1.4; position:relative; z-index:1;
+}
+
+.testimonial-source {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.78rem; font-weight:600;
+  letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--gold);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PAGE: CONTACT
+═══════════════════════════════════════════════════════════════════ */
+.contact-layout {
+  display:grid; grid-template-columns:1fr 1.5fr;
+  gap:0; min-height:70vh; align-items:stretch;
+}
+
+.contact-left {
+  padding: clamp(3rem,6vw,6rem) clamp(1.5rem,5vw,5rem);
+  background:var(--g1);
+  border-right:1px solid var(--g4);
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+
+.contact-right {
+  padding: clamp(3rem,6vw,6rem) clamp(1.5rem,6vw,6rem);
+}
+
+.contact-details { display:flex; flex-direction:column; gap:2rem; }
+
+.contact-detail {
+  display:flex; gap:1.5rem; align-items:flex-start;
+}
+
+.contact-detail-icon {
+  width:44px; height:44px; flex-shrink:0;
+  background:var(--golddim); border:1px solid rgba(201,168,76,0.2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem;
+}
+
+.contact-detail-label {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600; font-size:0.72rem;
+  letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--g6); margin-bottom:0.35rem;
+}
+
+.contact-detail-value { color:var(--white); font-size:0.95rem; }
+
+.contact-offices { margin-top:3rem; }
+
+.office-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:0.4rem 1rem;
+  border:1px solid var(--g5);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.78rem; font-weight:600;
+  letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--g8); margin:0.25rem;
+}
+
+.office-tag-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--gold);
+}
+
+/* Contact Form */
+.contact-form { display:flex; flex-direction:column; gap:1.5rem; }
+
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+
+.form-group { display:flex; flex-direction:column; gap:0.5rem; }
+
+.form-label {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600; font-size:0.72rem;
+  letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--g6);
+}
+
+.form-input, .form-select, .form-textarea {
+  background:var(--g2); border:1px solid var(--g4);
+  color:var(--white); padding:1rem 1.25rem;
+  font-family:'Barlow',sans-serif; font-size:0.9rem;
+  outline:none; appearance:none;
+  transition:border-color 0.25s;
+  width:100%;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color:var(--gold);
+}
+
+.form-select option { background:var(--g3); }
+
+.form-textarea { min-height:160px; resize:vertical; }
+
+.form-submit {
+  align-self:flex-start;
+}
+
+.form-note {
+  font-size:var(--fs-xs); color:var(--g6);
+  margin-top:-0.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════════════════ */
+footer {
+  background:var(--black);
+  border-top:1px solid var(--g3);
+  padding: 4rem clamp(1.5rem,8vw,8rem) 2rem;
+}
+
+.footer-top {
+  display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr;
+  gap:4rem; padding-bottom:3rem;
+  border-bottom:1px solid var(--g3);
+}
+
+.footer-brand-col {}
+
+.footer-logo-text {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:800; font-size:1.3rem;
+  letter-spacing:0.12em; color:var(--gold);
+  margin-bottom:0.25rem;
+}
+
+.footer-tagline {
+  font-size:var(--fs-sm); color:var(--g6);
+  margin-bottom:1.5rem; line-height:1.6;
+}
+
+.footer-col-head {
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700; font-size:0.72rem;
+  letter-spacing:0.25em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:1.25rem;
+}
+
+.footer-links { display:flex; flex-direction:column; gap:0.5rem; }
+
+.footer-link {
+  font-size:var(--fs-sm); color:var(--g7);
+  cursor:pointer; transition:color 0.2s;
+  text-decoration:none;
+}
+
+.footer-link:hover { color:var(--white); }
+
+.footer-bottom {
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:1rem; padding-top:2rem;
+}
+
+.footer-legal { font-size:var(--fs-xs); color:var(--g6); }
+
+.footer-psira {
+  display:flex; align-items:center; gap:8px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem; font-weight:600;
+  letter-spacing:0.15em; color:var(--gold);
+}
+
+.footer-psira-icon {
+  width:20px; height:20px; background:var(--golddim);
+  border:1px solid rgba(201,168,76,0.3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.65rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════════════════════════ */
+.reveal {
+  opacity:0; transform:translateY(24px);
+  transition:opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+.reveal-delay-1 { transition-delay:0.1s; }
+.reveal-delay-2 { transition-delay:0.2s; }
+.reveal-delay-3 { transition-delay:0.3s; }
+.reveal-delay-4 { transition-delay:0.4s; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════════ */
+@media (max-width:1024px) {
+  .nav-links, .nav-cta { display:none; }
+  .nav-toggle { display:flex; }
+  .intro-grid { grid-template-columns:1fr; }
+  .intro-left { border-right:none; border-bottom:1px solid var(--g4); }
+  .services-layout { grid-template-columns:1fr; }
+  .services-nav { position:static; padding: 2rem clamp(1.5rem,5vw,5rem); flex-direction:row; flex-wrap:wrap; border-bottom:1px solid var(--g4); }
+  .services-content { padding:3rem clamp(1.5rem,5vw,5rem); border-left:none; }
+  .nightly-grid { grid-template-columns:1fr; }
+  .nightly-tier.featured { transform:none; border:2px solid rgba(201,168,76,0.4); }
+  .retainer-grid { grid-template-columns:1fr; }
+  .retainer-intro { grid-template-columns:1fr; gap:2rem; }
+  .coverage-layout { grid-template-columns:1fr; }
+  .coverage-left { border-bottom:1px solid var(--g4); }
+  .diff-grid { grid-template-columns:1fr 1fr; }
+  .why-hero-split { grid-template-columns:1fr; }
+  .why-right { min-height:auto; padding:3rem clamp(1.5rem,5vw,5rem); border-left:none; border-top:1px solid var(--g4); justify-content:flex-start; }
+  .contact-layout { grid-template-columns:1fr; }
+  .contact-left { border-right:none; border-bottom:1px solid var(--g4); }
+  .footer-top { grid-template-columns:1fr 1fr; gap:2.5rem; }
+  .grid-3 { grid-template-columns:1fr 1fr; }
+  .grid-4 { grid-template-columns:1fr 1fr; }
+  .tier-preview-grid { grid-template-columns:1fr; }
+  .pricing-intro { grid-template-columns:1fr; gap:2rem; }
+}
+
+@media (max-width:640px) {
+  :root { --nav-h:60px; }
+  .hero-stats { flex-direction:column; gap:1.5rem; }
+  .hero-stat { border-right:none; border-bottom:1px solid var(--g4); padding:0 0 1.5rem; margin:0; }
+  .hero-stat:last-child { border-bottom:none; }
+  .form-row { grid-template-columns:1fr; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns:1fr; }
+  .diff-grid { grid-template-columns:1fr; }
+  .service-feature-grid { grid-template-columns:1fr; }
+  .coverage-stats { grid-template-columns:1fr; }
+  .footer-top { grid-template-columns:1fr; gap:2rem; }
+  .footer-bottom { flex-direction:column; text-align:center; }
+  .compare-table { font-size:0.8rem; }
+  .compare-table th, .compare-table td { padding:0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════
+  NAVIGATION
+══════════════════════════════════════════════════════════════════ -->
+<nav id="mainNav">
+  <a class="nav-brand" href="#" onclick="showPage('home')">
+    <div class="nav-shield">
+      <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 4L94 22V58C94 84 74 104 50 116C26 104 6 84 6 58V22L50 4Z" fill="rgba(201,168,76,0.12)" stroke="#C9A84C" stroke-width="2"/>
+        <path d="M50 18L82 32V58C82 77 68 93 50 102C32 93 18 77 18 58V32L50 18Z" fill="rgba(201,168,76,0.08)"/>
+        <path d="M38 58L46 66L64 48" stroke="#C9A84C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="nav-wordmark">
+      <span class="nav-wordmark-top">Bouncer VIP Express</span>
+      <span class="nav-wordmark-bot">Professional Security · Est. 2025</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" data-page="home">Home</a></li>
+    <li><a href="#" onclick="showPage('services')" data-page="services">Services</a></li>
+    <li><a href="#" onclick="showPage('pricing')" data-page="pricing">Pricing</a></li>
+    <li><a href="#" onclick="showPage('coverage')" data-page="coverage">Coverage</a></li>
+    <li><a href="#" onclick="showPage('why')" data-page="why">Why Us</a></li>
+    <li><a href="#" onclick="showPage('contact')" class="nav-cta" data-page="contact">Get a Quote</a></li>
+  </ul>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="#" onclick="showPage('home');closeMobile()">Home</a>
+  <a href="#" onclick="showPage('services');closeMobile()">Services</a>
+  <a href="#" onclick="showPage('pricing');closeMobile()">Pricing</a>
+  <a href="#" onclick="showPage('coverage');closeMobile()">Coverage</a>
+  <a href="#" onclick="showPage('why');closeMobile()">Why Us</a>
+  <a href="#" onclick="showPage('contact');closeMobile()" class="nav-cta-mob">Get a Quote →</a>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+  PAGE: HOME
+══════════════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        KZN · Gauteng · Western Cape — National Security Services
+      </div>
+      <h1 class="hero-title">
+        <span class="hero-title-gold">Professional.</span>
+        <span class="hero-title-white">Licensed.</span>
+        <span class="hero-title-outline">Reliable.</span>
+      </h1>
+      <p class="hero-sub">South Africa's dedicated nightlife security provider. PSIRA-certified bouncers for bars, clubs, lounges and entertainment venues — deployed with precision, accountability and contractual certainty.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-gold btn-arrow" onclick="showPage('pricing')">View Pricing</a>
+        <a href="#" class="btn btn-outline" onclick="showPage('contact')">Request a Proposal</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">600+</div>
+          <div class="hero-stat-label">Venues in Pipeline</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">3</div>
+          <div class="hero-stat-label">Provinces Covered</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">PSIRA Certified Staff</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">60min</div>
+          <div class="hero-stat-label">Emergency Cover</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro split -->
+  <div class="intro-grid">
+    <div class="intro-left reveal">
+      <div class="section-tag">About Bouncer VIP Express</div>
+      <h2 class="section-title">Built exclusively<br>for <em>nightlife</em></h2>
+      <span class="gold-line"></span>
+      <p style="color:var(--g7);font-size:var(--fs-md);line-height:1.75;font-weight:300;">We are not a generalist security company that also covers nightlife. Bouncer VIP Express (Pty) Ltd was founded with a single focus: providing professional, compliant, branded security services to the South African nightlife and entertainment industry.</p>
+      <p style="color:var(--g7);font-size:0.95rem;line-height:1.75;margin-top:1.5rem;font-weight:300;">Every bouncer on our register is PSIRA Grade C+ certified. Every engagement is governed by a formal SLA. Every venue we serve receives monthly compliance documentation. This is the standard — not the exception.</p>
+      <div style="margin-top:2.5rem;">
+        <a href="#" class="btn btn-gold btn-arrow" onclick="showPage('why')">Why Choose Us</a>
+      </div>
+    </div>
+    <div class="intro-right">
+      <div class="intro-pillars">
+        <div class="intro-pillar reveal reveal-delay-1">
+          <div class="intro-pillar-icon">🛡</div>
+          <div>
+            <div class="intro-pillar-head">PSIRA Compliance</div>
+            <div class="intro-pillar-body">All personnel are PSIRA Grade C+ registered and compliant. Zero unregistered staff — ever. Your liquor licence is protected.</div>
+          </div>
+        </div>
+        <div class="intro-pillar reveal reveal-delay-2">
+          <div class="intro-pillar-icon">📋</div>
+          <div>
+            <div class="intro-pillar-head">Contractual Certainty</div>
+            <div class="intro-pillar-body">Every engagement is backed by an MSA, SLA and Statement of Work. No verbal agreements. No ambiguity. Full accountability.</div>
+          </div>
+        </div>
+        <div class="intro-pillar reveal reveal-delay-3">
+          <div class="intro-pillar-icon">⚡</div>
+          <div>
+            <div class="intro-pillar-head">60-Minute Cover Guarantee</div>
+            <div class="intro-pillar-body">Emergency replacement dispatched within 60 minutes of any no-show. Guaranteed in writing — or we cover the cost.</div>
+          </div>
+        </div>
+        <div class="intro-pillar reveal reveal-delay-4">
+          <div class="intro-pillar-icon">📊</div>
+          <div>
+            <div class="intro-pillar-head">Monthly Reporting</div>
+            <div class="intro-pillar-body">Detailed incident reports, shift logs and compliance records delivered every month — your documented audit trail.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Venue types -->
+  <section class="section">
+    <div class="section-tag">Venue Types We Serve</div>
+    <h2 class="section-title" style="margin-bottom:3rem;">Where we <em>operate</em></h2>
+    <div class="venue-types-grid">
+      <div class="venue-type-item">
+        <div class="venue-type-num">01</div>
+        <div class="venue-type-name">Bars & Pubs</div>
+        <div class="venue-type-bar"></div>
+      </div>
+      <div class="venue-type-item">
+        <div class="venue-type-num">02</div>
+        <div class="venue-type-name">Night Clubs</div>
+        <div class="venue-type-bar"></div>
+      </div>
+      <div class="venue-type-item">
+        <div class="venue-type-num">03</div>
+        <div class="venue-type-name">Lounges</div>
+        <div class="venue-type-bar"></div>
+      </div>
+      <div class="venue-type-item">
+        <div class="venue-type-num">04</div>
+        <div class="venue-type-name">Adult Entertainment</div>
+        <div class="venue-type-bar"></div>
+      </div>
+      <div class="venue-type-item">
+        <div class="venue-type-num">05</div>
+        <div class="venue-type-name">Dance Venues</div>
+        <div class="venue-type-bar"></div>
+      </div>
+      <div class="venue-type-item">
+        <div class="venue-type-num">06</div>
+        <div class="venue-type-name">Taverns</div>
+        <div class="venue-type-bar"></div>
+      </div>
+      <div class="venue-type-item">
+        <div class="venue-type-num">07</div>
+        <div class="venue-type-name">Restaurant Bars</div>
+        <div class="venue-type-bar"></div>
+      </div>
+      <div class="venue-type-item">
+        <div class="venue-type-num">08</div>
+        <div class="venue-type-name">Events & Functions</div>
+        <div class="venue-type-bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tier preview -->
+  <section class="section section-alt" style="padding-top:0;padding-bottom:0;">
+    <div style="padding:clamp(3rem,6vw,6rem) 0 0; margin-bottom:2rem;">
+      <div class="section-tag">Transparent Pricing</div>
+      <h2 class="section-title">Three tiers. <em>One standard.</em></h2>
+    </div>
+    <div class="tier-preview-grid">
+      <div class="tier-prev" style="--tier-color:var(--gold);">
+        <div class="tier-prev-label">Economy Tier</div>
+        <div class="tier-prev-rate">R1,350</div>
+        <div class="tier-prev-unit">per bouncer · per night · 6PM–2AM</div>
+        <div class="tier-prev-venues">Bars, Pubs & Taverns · 2 bouncers recommended</div>
+      </div>
+      <div class="tier-prev" style="--tier-color:var(--gold2);">
+        <div class="tier-prev-label">Standard Tier</div>
+        <div class="tier-prev-rate">R2,499</div>
+        <div class="tier-prev-unit">per bouncer · per night · 6PM–2AM</div>
+        <div class="tier-prev-venues">Lounges & Dance Venues · 3–4 bouncers recommended</div>
+      </div>
+      <div class="tier-prev" style="--tier-color:var(--red);">
+        <div class="tier-prev-label">Premium Tier</div>
+        <div class="tier-prev-rate">R3,999</div>
+        <div class="tier-prev-unit">per bouncer · per night · 6PM–2AM</div>
+        <div class="tier-prev-venues">Nightclubs & Adult Entertainment · 5–6 bouncers recommended</div>
+      </div>
+    </div>
+    <div style="padding:2.5rem 0;display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+      <a href="#" class="btn btn-gold btn-arrow" onclick="showPage('pricing')">Full Pricing Details</a>
+      <a href="#" class="btn btn-outline" onclick="showPage('contact')">Request a Quote</a>
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <div style="padding:clamp(4rem,7vw,7rem) clamp(1.5rem,8vw,8rem);background:var(--g2);border-top:1px solid var(--g4);border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;">
+    <div>
+      <div class="section-tag" style="margin-bottom:0.75rem;">Ready to Upgrade?</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,4vw,2.5rem);font-weight:700;line-height:1.1;">Founding venue rates available<br>for early sign-ups.</h3>
+    </div>
+    <a href="#" class="btn btn-gold btn-arrow" onclick="showPage('contact')" style="flex-shrink:0;">Submit an Enquiry</a>
+  </div>
+
+</div><!-- end page home -->
+
+<!-- ══════════════════════════════════════════════════════════════════
+  PAGE: SERVICES
+══════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-services">
+
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-accent"></div>
+    <div class="page-hero-content">
+      <div class="section-tag">Our Services</div>
+      <h1 class="page-hero-title">Security built for<br><em style="color:var(--gold);">the night shift</em></h1>
+      <p class="page-hero-sub">Every service we provide is designed exclusively for nightlife. Not adapted. Not repurposed. Built from the ground up for entertainment venues.</p>
+    </div>
+  </div>
+
+  <div class="services-layout">
+    <!-- Service nav -->
+    <div class="services-nav">
+      <div class="service-nav-item active" onclick="showService('bouncer')">Certified Bouncers</div>
+      <div class="service-nav-item" onclick="showService('crowd')">Crowd Management</div>
+      <div class="service-nav-item" onclick="showService('vip')">VIP Management</div>
+      <div class="service-nav-item" onclick="showService('compliance')">Compliance & Reporting</div>
+      <div class="service-nav-item" onclick="showService('retainer')">Retainer Contracts</div>
+      <div class="service-nav-item" onclick="showService('events')">Events & Functions</div>
+    </div>
+
+    <!-- Service content -->
+    <div class="services-content">
+
+      <!-- Bouncer -->
+      <div class="service-block active" id="service-bouncer">
+        <div class="service-block-header">
+          <div class="service-block-icon">🛡</div>
+          <div>
+            <h2 class="service-block-title">Certified<br><em style="color:var(--gold);">Bouncers</em></h2>
+            <p class="service-block-sub">PSIRA Grade C+ registered, vetted, trained and uniformed security personnel.</p>
+          </div>
+        </div>
+        <div class="service-feature-grid">
+          <div class="service-feature"><div class="service-feature-head">PSIRA Registration</div><div class="service-feature-body">Every bouncer holds a valid, current PSIRA Grade C+ registration. Certificates available on request. Zero unregistered personnel — guaranteed.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Background Vetting</div><div class="service-feature-body">Full criminal background checks and reference verification for all staff before deployment. You know exactly who is standing at your door.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Professional Uniforms</div><div class="service-feature-body">Branded Bouncer VIP Express uniforms at every deployment. Consistent, professional, identifiable — an extension of your venue's image.</div></div>
+          <div class="service-feature"><div class="service-feature-head">De-escalation Training</div><div class="service-feature-body">All bouncers are trained in verbal de-escalation before physical intervention — reducing incidents, liability and negative press for your venue.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Full 6PM–2AM Shift</div><div class="service-feature-body">Coverage across the full nightlife trading window. Shift handover protocols ensure no gaps between coverage periods.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Emergency Replacement</div><div class="service-feature-body">Any no-show triggers an immediate dispatch. Emergency replacement guaranteed within 60 minutes, SLA-backed with financial recourse.</div></div>
+        </div>
+        <div><p style="color:var(--g7);font-size:var(--fs-sm);margin-bottom:1rem;">Recommended for:</p><div class="venue-tag-list"><span class="venue-tag">Bars</span><span class="venue-tag">Pubs</span><span class="venue-tag">Taverns</span><span class="venue-tag">Lounges</span><span class="venue-tag">Nightclubs</span><span class="venue-tag">All Venue Types</span></div></div>
+      </div>
+
+      <!-- Crowd -->
+      <div class="service-block" id="service-crowd">
+        <div class="service-block-header">
+          <div class="service-block-icon">👥</div>
+          <div>
+            <h2 class="service-block-title">Crowd<br><em style="color:var(--gold);">Management</em></h2>
+            <p class="service-block-sub">Professional patron flow, capacity control and incident management.</p>
+          </div>
+        </div>
+        <div class="service-feature-grid">
+          <div class="service-feature"><div class="service-feature-head">Entry Screening</div><div class="service-feature-body">Controlled entry points with identity verification, age checks and patron conduct screening. Informed decisions at the door — before issues enter your venue.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Capacity Management</div><div class="service-feature-body">Real-time occupancy tracking and controlled entry to maintain legal capacity limits — protecting your licence and ensuring patron safety.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Patron Conduct</div><div class="service-feature-body">Active monitoring of the venue floor, bar areas and smoking sections. Early intervention before situations escalate.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Emergency Response</div><div class="service-feature-body">Trained procedures for medical emergencies, fire evacuations and altercations. Your staff know exactly what to do — and so do ours.</div></div>
+        </div>
+        <div><p style="color:var(--g7);font-size:var(--fs-sm);margin-bottom:1rem;">Recommended for:</p><div class="venue-tag-list"><span class="venue-tag">Nightclubs</span><span class="venue-tag">Dance Venues</span><span class="venue-tag">Large Bars</span><span class="venue-tag">Events</span></div></div>
+      </div>
+
+      <!-- VIP -->
+      <div class="service-block" id="service-vip">
+        <div class="service-block-header">
+          <div class="service-block-icon">⭐</div>
+          <div>
+            <h2 class="service-block-title">VIP Guest<br><em style="color:var(--gold);">Management</em></h2>
+            <p class="service-block-sub">Premium entry management that enhances your brand, not just your security.</p>
+          </div>
+        </div>
+        <div class="service-feature-grid">
+          <div class="service-feature"><div class="service-feature-head">VIP Lane Control</div><div class="service-feature-body">Dedicated VIP entry management with guestlist verification, priority access and premium patron experience from the moment they arrive.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Dress Code Enforcement</div><div class="service-feature-body">Consistent, respectful dress code management. Our staff understand that how you turn someone away matters as much as the decision itself.</div></div>
+          <div class="service-feature"><div class="service-feature-head">High-Profile Guest Handling</div><div class="service-feature-body">Discreet management of high-profile guests, celebrities and large private bookings — coordinated with your events team.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Brand-Aligned Conduct</div><div class="service-feature-body">Bouncers briefed on your venue's culture, clientele and standards before every shift. Your brand is safe in our hands.</div></div>
+        </div>
+        <div><p style="color:var(--g7);font-size:var(--fs-sm);margin-bottom:1rem;">Recommended for:</p><div class="venue-tag-list"><span class="venue-tag">Nightclubs</span><span class="venue-tag">Upmarket Lounges</span><span class="venue-tag">Adult Entertainment</span><span class="venue-tag">Events</span></div></div>
+      </div>
+
+      <!-- Compliance -->
+      <div class="service-block" id="service-compliance">
+        <div class="service-block-header">
+          <div class="service-block-icon">📋</div>
+          <div>
+            <h2 class="service-block-title">Compliance<br><em style="color:var(--gold);">&amp; Reporting</em></h2>
+            <p class="service-block-sub">Your documented audit trail — protecting your licence and limiting your liability.</p>
+          </div>
+        </div>
+        <div class="service-feature-grid">
+          <div class="service-feature"><div class="service-feature-head">Monthly Incident Reports</div><div class="service-feature-body">Comprehensive monthly reports covering all incidents, interventions, and patron ejections. Your legal defence starts here.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Shift Logs</div><div class="service-feature-body">Per-shift documentation of deployed personnel, start and end times, incident summaries and any notable occurrences.</div></div>
+          <div class="service-feature"><div class="service-feature-head">PSIRA Certificate Records</div><div class="service-feature-body">Full PSIRA registration records for all deployed staff maintained on file and available to venue management on request.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Liquor Act Alignment</div><div class="service-feature-body">All deployments are structured to support your compliance with the Liquor Act — including capacity controls, conduct standards and incident documentation.</div></div>
+        </div>
+        <div><p style="color:var(--g7);font-size:var(--fs-sm);margin-bottom:1rem;">Included with:</p><div class="venue-tag-list"><span class="venue-tag">All Tiers</span><span class="venue-tag">All Retainer Contracts</span></div></div>
+      </div>
+
+      <!-- Retainer -->
+      <div class="service-block" id="service-retainer">
+        <div class="service-block-header">
+          <div class="service-block-icon">🤝</div>
+          <div>
+            <h2 class="service-block-title">Retainer<br><em style="color:var(--gold);">Contracts</em></h2>
+            <p class="service-block-sub">Lock in your team, lock in your rate. Monthly SLA-backed certainty for your venue.</p>
+          </div>
+        </div>
+        <div class="service-feature-grid">
+          <div class="service-feature"><div class="service-feature-head">Dedicated Team</div><div class="service-feature-body">The same bouncer team at your venue every week. They know your venue, your regulars, your standards — not a new face every Friday.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Rate Discount (10–15%)</div><div class="service-feature-body">All monthly retainer contracts receive a 10–15% discount on applicable nightly tier rates. Calculated per your trading schedule.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Priority Dispatch</div><div class="service-feature-body">Retainer clients receive priority status for emergency cover, surge staffing and event expansions. You are always first in the queue.</div></div>
+          <div class="service-feature"><div class="service-feature-head">12–24 Month Terms</div><div class="service-feature-body">SLA terms of 12 or 24 months with clearly defined exit clauses, performance guarantees and escalation procedures.</div></div>
+        </div>
+        <div style="margin-top:1.5rem;"><a href="#" class="btn btn-gold btn-arrow" onclick="showPage('pricing')">View Retainer Rates</a></div>
+      </div>
+
+      <!-- Events -->
+      <div class="service-block" id="service-events">
+        <div class="service-block-header">
+          <div class="service-block-icon">🎪</div>
+          <div>
+            <h2 class="service-block-title">Events<br><em style="color:var(--gold);">&amp; Functions</em></h2>
+            <p class="service-block-sub">Surge capacity for concerts, launches, special events and private functions.</p>
+          </div>
+        </div>
+        <div class="service-feature-grid">
+          <div class="service-feature"><div class="service-feature-head">Event Planning Consultation</div><div class="service-feature-body">Pre-event security briefing with your events team — crowd projections, entry points, risk assessment and staff deployment plan.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Surge Capacity</div><div class="service-feature-body">Scale up to 10–30 bouncers for major events. Our national register ensures we can meet even large-volume surge requests with advance notice.</div></div>
+          <div class="service-feature"><div class="service-feature-head">Minimum Deployment</div><div class="service-feature-body">Events require a minimum deployment of 4 certified bouncers. Advance booking of 72 hours required for planned events.</div></div>
+          <div class="service-feature"><div class="service-feature-head">On-Site Supervisor</div><div class="service-feature-body">All event deployments of 8+ include a dedicated on-site supervisor with radio coordination and direct line to our operations centre.</div></div>
+        </div>
+        <div><p style="color:var(--g7);font-size:var(--fs-sm);margin-bottom:1rem;">Suitable for:</p><div class="venue-tag-list"><span class="venue-tag">Concerts</span><span class="venue-tag">Launches</span><span class="venue-tag">Private Functions</span><span class="venue-tag">Festivals</span><span class="venue-tag">Corporate Events</span></div></div>
+      </div>
+
+    </div><!-- end services-content -->
+  </div>
+
+  <!-- CTA -->
+  <div style="padding:4rem clamp(1.5rem,8vw,8rem);background:var(--g1);border-top:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;">
+    <div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;">Ready to discuss your venue's security needs?</h3>
+      <p style="color:var(--g7);margin-top:0.5rem;">We'll respond within 24 hours with a tailored proposal.</p>
+    </div>
+    <a href="#" class="btn btn-gold btn-arrow" onclick="showPage('contact')">Get in Touch</a>
+  </div>
+
+</div><!-- end page services -->
+
+<!-- ══════════════════════════════════════════════════════════════════
+  PAGE: PRICING
+══════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-pricing">
+
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-accent"></div>
+    <div class="page-hero-content">
+      <div class="section-tag">Service Rates</div>
+      <h1 class="page-hero-title">Transparent pricing.<br><em style="color:var(--gold);">No surprises.</em></h1>
+      <p class="page-hero-sub">Three tiers aligned to your venue type. All rates per bouncer, per 8-hour night shift (6PM–2AM). Monthly retainer discounts available on all tiers.</p>
+    </div>
+  </div>
+
+  <!-- Nightly rates -->
+  <section class="section">
+    <div class="pricing-intro">
+      <div>
+        <div class="section-tag">Nightly Rates</div>
+        <h2 class="section-title">Per-shift <em>pricing</em></h2>
+        <span class="gold-line"></span>
+        <p class="section-lead">All rates are per bouncer, per 8-hour night shift. We recommend a minimum deployment based on your venue type and expected patron volume.</p>
+      </div>
+      <div style="padding:2rem;background:var(--g2);border:1px solid var(--g4);border-left:3px solid var(--gold);">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">Shift Window</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;line-height:1;margin-bottom:0.5rem;">6PM — 2AM</div>
+        <div style="font-size:var(--fs-sm);color:var(--g7);margin-bottom:1.5rem;">Standard 8-hour trading window. Extended shift arrangements available on request.</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;">All rates include:</div>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <div style="font-size:0.86rem;color:var(--g8);">✓ PSIRA-certified personnel</div>
+          <div style="font-size:0.86rem;color:var(--g8);">✓ Branded Bouncer VIP Express uniform</div>
+          <div style="font-size:0.86rem;color:var(--g8);">✓ Shift incident log</div>
+          <div style="font-size:0.86rem;color:var(--g8);">✓ Emergency cover guarantee</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nightly-grid">
+      <!-- Economy -->
+      <div class="nightly-tier">
+        <div class="nightly-tier-name">Economy Tier</div>
+        <div class="nightly-rate"><span class="nightly-rate-currency">R</span>1,350</div>
+        <div class="nightly-rate-period">per bouncer · per night</div>
+        <div class="nightly-tier-color-bar" style="background:var(--gold);"></div>
+        <div class="nightly-venues">Bars, Pubs &amp; Taverns</div>
+        <div class="nightly-bouncers">2 bouncers recommended</div>
+        <div class="pricing-features">
+          <div class="pricing-feature">PSIRA Grade C+ certified bouncer</div>
+          <div class="pricing-feature">Standard Bouncer VIP uniform</div>
+          <div class="pricing-feature">Entry screening & patron control</div>
+          <div class="pricing-feature">Per-shift incident log</div>
+          <div class="pricing-feature">Monthly summary report</div>
+          <div class="pricing-feature">Emergency replacement cover</div>
+        </div>
+        <a href="#" class="btn btn-outline" onclick="showPage('contact')" style="margin-top:auto;">Enquire Now</a>
+      </div>
+
+      <!-- Standard -->
+      <div class="nightly-tier featured">
+        <div class="nightly-tier-badge">★ Most Selected</div>
+        <div class="nightly-tier-name">Standard Tier</div>
+        <div class="nightly-rate"><span class="nightly-rate-currency">R</span>2,499</div>
+        <div class="nightly-rate-period">per bouncer · per night</div>
+        <div class="nightly-tier-color-bar" style="background:var(--gold2);"></div>
+        <div class="nightly-venues">Lounges &amp; Dance Venues</div>
+        <div class="nightly-bouncers">3–4 bouncers recommended</div>
+        <div class="pricing-features">
+          <div class="pricing-feature">All Economy features</div>
+          <div class="pricing-feature">Senior bouncer on duty</div>
+          <div class="pricing-feature">Crowd & capacity management</div>
+          <div class="pricing-feature">VIP area assistance</div>
+          <div class="pricing-feature">Radio communications</div>
+          <div class="pricing-feature">Detailed monthly report</div>
+        </div>
+        <a href="#" class="btn btn-gold" onclick="showPage('contact')" style="margin-top:auto;">Enquire Now</a>
+      </div>
+
+      <!-- Premium -->
+      <div class="nightly-tier">
+        <div class="nightly-tier-name">Premium Tier</div>
+        <div class="nightly-rate"><span class="nightly-rate-currency">R</span>3,999</div>
+        <div class="nightly-rate-period">per bouncer · per night</div>
+        <div class="nightly-tier-color-bar" style="background:var(--red);"></div>
+        <div class="nightly-venues">Nightclubs &amp; Adult Entertainment</div>
+        <div class="nightly-bouncers">5–6 bouncers recommended</div>
+        <div class="pricing-features">
+          <div class="pricing-feature">All Standard features</div>
+          <div class="pricing-feature">Dedicated team leader on site</div>
+          <div class="pricing-feature">Full VIP lane management</div>
+          <div class="pricing-feature">Dress code enforcement</div>
+          <div class="pricing-feature">Priority emergency dispatch</div>
+          <div class="pricing-feature">Full compliance documentation pack</div>
+        </div>
+        <a href="#" class="btn btn-outline" onclick="showPage('contact')" style="margin-top:auto;">Enquire Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Monthly Retainers -->
+  <div class="retainer-section">
+    <div class="retainer-intro">
+      <div>
+        <div class="section-tag">Monthly Retainers</div>
+        <h2 class="section-title">Save more.<br><em>Commit less</em> hassle.</h2>
+        <span class="gold-line"></span>
+        <p class="section-lead">Sign a 12 or 24-month SLA retainer and receive a 10–15% discount on your tier rate, a dedicated bouncer team and guaranteed priority service.</p>
+      </div>
+      <div>
+        <p style="color:var(--g7);font-size:0.9rem;line-height:1.75;margin-bottom:1.5rem;">Monthly retainer rates are calculated based on your venue's trading schedule (nights per week) and recommended bouncer headcount for your tier. Below are indicative monthly rates based on standard operating nights.</p>
+        <div style="padding:1.5rem;background:var(--g2);border:1px solid rgba(201,168,76,0.25);">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;">Retainer Savings Example</div>
+          <p style="font-size:0.86rem;color:var(--g7);line-height:1.6;">A Standard Tier venue operating 5 nights/week with 3 bouncers at R2,499/night would pay <strong style="color:var(--white);">R162,435/month</strong> at nightly rates. On a 12-month retainer (12% discount), that becomes <strong style="color:var(--gold);">R142,943/month</strong> — a saving of <strong style="color:var(--gold);">R19,492 every month.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="retainer-grid">
+      <!-- Economy retainer -->
+      <div class="retainer-card">
+        <div class="retainer-card-header">
+          <div class="retainer-card-accent" style="background:var(--gold);"></div>
+          <div class="retainer-card-name">Economy Retainer</div>
+          <div style="font-size:var(--fs-sm);color:var(--g7);margin-bottom:0.5rem;">Indicative — Bars &amp; Pubs (5 nights, 2 bouncers)</div>
+          <div class="retainer-monthly-rate">R<span>23,814</span></div>
+          <div class="retainer-monthly-label">per month <em style="color:var(--g6);">(12% off R1,350 × 2 × 5 × 4.33)</em></div>
+          <div class="retainer-saving">Save ~R3,276/month vs nightly</div>
+        </div>
+        <div class="retainer-card-body">
+          <div class="retainer-included">
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold);"></div>Dedicated 2-person bouncer team</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold);"></div>5 nights/week coverage</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold);"></div>Priority emergency replacement</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold);"></div>Monthly compliance report</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold);"></div>12-month SLA with exit clause</div>
+          </div>
+          <div style="margin-top:1.5rem;"><a href="#" class="btn btn-outline" style="font-size:0.78rem;padding:0.75rem 1.5rem;" onclick="showPage('contact')">Get Custom Quote</a></div>
+        </div>
+      </div>
+
+      <!-- Standard retainer -->
+      <div class="retainer-card" style="border-color:rgba(201,168,76,0.3);">
+        <div class="retainer-card-header">
+          <div class="retainer-card-accent" style="background:var(--gold2);"></div>
+          <div class="retainer-card-name">Standard Retainer</div>
+          <div style="font-size:var(--fs-sm);color:var(--g7);margin-bottom:0.5rem;">Indicative — Lounges (5.5 nights, 3.5 bouncers)</div>
+          <div class="retainer-monthly-rate">R<span>57,580</span></div>
+          <div class="retainer-monthly-label">per month <em style="color:var(--g6);">(12% off R2,499 × 3.5 × 5.5 × 4.33)</em></div>
+          <div class="retainer-saving">Save ~R7,918/month vs nightly</div>
+        </div>
+        <div class="retainer-card-body">
+          <div class="retainer-included">
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold2);"></div>Dedicated 3–4 person team</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold2);"></div>5.5 nights/week coverage</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold2);"></div>Senior bouncer on every shift</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold2);"></div>Priority emergency replacement</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold2);"></div>Monthly detailed report</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--gold2);"></div>12 or 24-month SLA option</div>
+          </div>
+          <div style="margin-top:1.5rem;"><a href="#" class="btn btn-gold" style="font-size:0.78rem;padding:0.75rem 1.5rem;" onclick="showPage('contact')">Get Custom Quote</a></div>
+        </div>
+      </div>
+
+      <!-- Premium retainer -->
+      <div class="retainer-card">
+        <div class="retainer-card-header">
+          <div class="retainer-card-accent" style="background:var(--red);"></div>
+          <div class="retainer-card-name">Premium Retainer</div>
+          <div style="font-size:var(--fs-sm);color:var(--g7);margin-bottom:0.5rem;">Indicative — Nightclubs (6.5 nights, 5.5 bouncers)</div>
+          <div class="retainer-monthly-rate">R<span>136,030</span></div>
+          <div class="retainer-monthly-label">per month <em style="color:var(--g6);">(12% off R3,999 × 5.5 × 6.5 × 4.33)</em></div>
+          <div class="retainer-saving">Save ~R18,695/month vs nightly</div>
+        </div>
+        <div class="retainer-card-body">
+          <div class="retainer-included">
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--red);"></div>Dedicated 5–6 person team</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--red);"></div>6.5 nights/week coverage</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--red);"></div>On-site team leader</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--red);"></div>Full VIP lane management</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--red);"></div>Priority dispatch guarantee</div>
+            <div class="retainer-item"><div class="retainer-item-dot" style="background:var(--red);"></div>Full compliance documentation</div>
+          </div>
+          <div style="margin-top:1.5rem;"><a href="#" class="btn btn-red" style="font-size:0.78rem;padding:0.75rem 1.5rem;" onclick="showPage('contact')">Get Custom Quote</a></div>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem;font-size:var(--fs-sm);color:var(--g6);font-style:italic;">* All retainer rates are indicative based on standard operating schedules. Custom quotes are provided per venue based on your specific trading pattern, headcount requirements and contract term. Contact us for a tailored proposal.</p>
+  </div>
+
+  <!-- Comparison table -->
+  <section class="section">
+    <div class="section-tag">Competitive Comparison</div>
+    <h2 class="section-title" style="margin-bottom:3rem;">Why venues choose <em>us</em></h2>
+    <div style="overflow-x:auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th class="bve-col">Bouncer VIP Express</th>
+            <th>Freelance Bouncers</th>
+            <th>Generic Security Co.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="factor">PSIRA Registration</td><td class="bve-win">✓ 100% — guaranteed</td><td class="lose">✗ Often none</td><td class="win">✓ Partial</td></tr>
+          <tr><td class="factor">Nightlife Specialisation</td><td class="bve-win">✓ Exclusive focus</td><td class="lose">✗ General</td><td class="lose">✗ General</td></tr>
+          <tr><td class="factor">Branded Uniforms</td><td class="bve-win">✓ VIP standard</td><td class="lose">✗ None</td><td class="win">✓ Basic</td></tr>
+          <tr><td class="factor">60-Minute Emergency Cover</td><td class="bve-win">✓ SLA-guaranteed</td><td class="lose">✗ Not guaranteed</td><td class="lose">✗ Best effort</td></tr>
+          <tr><td class="factor">Monthly Incident Reports</td><td class="bve-win">✓ Included standard</td><td class="lose">✗ None</td><td class="lose">✗ Ad hoc</td></tr>
+          <tr><td class="factor">Formal SLA Contracts</td><td class="bve-win">✓ 12–24 month terms</td><td class="lose">✗ None</td><td class="win">✓ Some</td></tr>
+          <tr><td class="factor">Dedicated Regular Team</td><td class="bve-win">✓ On retainer</td><td class="lose">✗ Different faces</td><td class="lose">✗ Rotational</td></tr>
+          <tr><td class="factor">Transparent Pricing</td><td class="bve-win">✓ Published tiers</td><td class="win">✓ Variable</td><td class="lose">✗ Opaque</td></tr>
+          <tr><td class="factor">Liquor Licence Protection</td><td class="bve-win">✓ Full compliance</td><td class="lose">✗ No documentation</td><td class="win">✓ Partial</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div><!-- end page pricing -->
+
+<!-- ══════════════════════════════════════════════════════════════════
+  PAGE: COVERAGE
+══════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-coverage">
+
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-accent"></div>
+    <div class="page-hero-content">
+      <div class="section-tag">Our Coverage</div>
+      <h1 class="page-hero-title">Operating<br><em style="color:var(--gold);">nationally</em></h1>
+      <p class="page-hero-sub">Active operations and business development across KwaZulu-Natal, Gauteng and the Western Cape — with more regions on the horizon.</p>
+    </div>
+  </div>
+
+  <div class="coverage-layout">
+    <!-- Regions accordion -->
+    <div class="coverage-left">
+      <div class="section-tag">Regions</div>
+      <h2 class="section-title" style="margin-bottom:3rem;">Where we<br><em>work</em></h2>
+
+      <div class="region-accordion">
+        <div class="region-item open">
+          <div class="region-header" onclick="toggleRegion(this.parentElement)">
+            <div class="region-num">01</div>
+            <div class="region-name-block">
+              <div class="region-name">KwaZulu-Natal</div>
+              <div class="region-status" style="color:var(--gold);">● Active</div>
+            </div>
+            <div class="region-toggle">+</div>
+          </div>
+          <div class="region-body">
+            <p class="region-desc">Our home province and primary market. Greater Durban Metro forms the core of our operations, with active coverage from Tongaat on the North Coast to Amanzimtoti on the South Coast.</p>
+            <div class="region-cities">
+              <span class="region-city">Durban CBD</span><span class="region-city">Umhlanga</span><span class="region-city">Westville</span><span class="region-city">Pinetown</span><span class="region-city">Berea</span><span class="region-city">Morningside</span><span class="region-city">Ballito</span><span class="region-city">La Mercy</span><span class="region-city">Tongaat</span><span class="region-city">Amanzimtoti</span><span class="region-city">Scottburgh</span><span class="region-city">Margate</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="region-item">
+          <div class="region-header" onclick="toggleRegion(this.parentElement)">
+            <div class="region-num">02</div>
+            <div class="region-name-block">
+              <div class="region-name">Gauteng</div>
+              <div class="region-status" style="color:var(--gold2);">◐ Active</div>
+            </div>
+            <div class="region-toggle">+</div>
+          </div>
+          <div class="region-body">
+            <p class="region-desc">Gauteng represents South Africa's largest nightlife market. We are actively building our Gauteng client base and operational capacity, with priority focus on the premium entertainment districts.</p>
+            <div class="region-cities">
+              <span class="region-city">Sandton</span><span class="region-city">Rosebank</span><span class="region-city">Midrand</span><span class="region-city">Fourways</span><span class="region-city">Melville</span><span class="region-city">Pretoria CBD</span><span class="region-city">Centurion</span><span class="region-city">Boksburg</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="region-item">
+          <div class="region-header" onclick="toggleRegion(this.parentElement)">
+            <div class="region-num">03</div>
+            <div class="region-name-block">
+              <div class="region-name">Western Cape</div>
+              <div class="region-status" style="color:var(--gold2);">◐ Active</div>
+            </div>
+            <div class="region-toggle">+</div>
+          </div>
+          <div class="region-body">
+            <p class="region-desc">Cape Town's vibrant nightlife scene is a natural fit for our service model. We are establishing our Western Cape footprint with a focus on the city's renowned entertainment districts.</p>
+            <div class="region-cities">
+              <span class="region-city">Cape Town CBD</span><span class="region-city">De Waterkant</span><span class="region-city">Green Point</span><span class="region-city">Sea Point</span><span class="region-city">Claremont</span><span class="region-city">Stellenbosch</span><span class="region-city">Somerset West</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="region-item">
+          <div class="region-header" onclick="toggleRegion(this.parentElement)">
+            <div class="region-num">04</div>
+            <div class="region-name-block">
+              <div class="region-name">Future Expansion</div>
+              <div class="region-status" style="color:var(--g6);">○ Planned</div>
+            </div>
+            <div class="region-toggle">+</div>
+          </div>
+          <div class="region-body">
+            <p class="region-desc">Our expansion roadmap includes further South African metros and consideration of neighbouring markets in the medium term, applying the proven Bouncer VIP Express operating model.</p>
+            <div class="region-cities">
+              <span class="region-city">Port Elizabeth</span><span class="region-city">Bloemfontein</span><span class="region-city">East London</span><span class="region-city">Kimberley</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coverage stats -->
+    <div class="coverage-right">
+      <div class="coverage-stats">
+        <div class="coverage-stat-card">
+          <div class="coverage-stat-num">600+</div>
+          <div class="coverage-stat-label">Venues in active outreach pipeline</div>
+        </div>
+        <div class="coverage-stat-card">
+          <div class="coverage-stat-num">3</div>
+          <div class="coverage-stat-label">Provinces covered nationally</div>
+        </div>
+        <div class="coverage-stat-card">
+          <div class="coverage-stat-num">300+</div>
+          <div class="coverage-stat-label">Venues in KZN alone</div>
+        </div>
+        <div class="coverage-stat-card">
+          <div class="coverage-stat-num">60%</div>
+          <div class="coverage-stat-label">KZN market share target, Year 1</div>
+        </div>
+      </div>
+
+      <!-- Phase timeline -->
+      <div class="phase-timeline">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;">Expansion Phases</div>
+
+        <div class="phase-item">
+          <div class="phase-num-block">I</div>
+          <div>
+            <div class="phase-head">KZN Domination</div>
+            <div class="phase-period">Month 1–12</div>
+            <div class="phase-desc">Establish 60%+ of the Greater Durban, North Coast and South Coast market. Build the operating model, systems and reputation that will power national expansion.</div>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num-block">II</div>
+          <div>
+            <div class="phase-head">Gauteng & Western Cape</div>
+            <div class="phase-period">Month 6–18</div>
+            <div class="phase-desc">Replicate the KZN playbook in South Africa's two largest nightlife markets. Sandton, Rosebank, Cape Town CBD and surrounding entertainment corridors.</div>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <div class="phase-num-block">III</div>
+          <div>
+            <div class="phase-head">National Standard</div>
+            <div class="phase-period">Month 18+</div>
+            <div class="phase-desc">Bouncer VIP Express becomes the nationally recognised name in nightlife security — the professional alternative to informal arrangements at every premium venue in South Africa.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page coverage -->
+
+<!-- ══════════════════════════════════════════════════════════════════
+  PAGE: WHY US
+══════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-why">
+
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-accent"></div>
+    <div class="page-hero-content">
+      <div class="section-tag">Why Bouncer VIP Express</div>
+      <h1 class="page-hero-title">The professional<br><em style="color:var(--gold);">difference</em></h1>
+      <p class="page-hero-sub">There is a meaningful difference between a registered bouncer on an SLA and a freelancer arranged over WhatsApp. Your venue's licence deserves the former.</p>
+    </div>
+  </div>
+
+  <!-- Split: copy + compliance visual -->
+  <div class="why-hero-split">
+    <div class="why-left">
+      <div class="section-tag">The Stakes</div>
+      <h2 class="section-title">Your licence is your<br><em>business.</em></h2>
+      <span class="gold-line"></span>
+      <p style="color:var(--g7);font-size:var(--fs-md);line-height:1.75;font-weight:300;margin-bottom:1.5rem;">A single SAPS compliance inspection, a patron liability claim or a liquor board inquiry can result in the suspension or revocation of your liquor licence. In South Africa's nightlife industry, unregistered security staff is one of the most common triggers for enforcement action.</p>
+      <p style="color:var(--g7);font-size:0.95rem;line-height:1.75;font-weight:300;margin-bottom:2rem;">Bouncer VIP Express eliminates that exposure entirely. Every bouncer we deploy is PSIRA registered. Every shift is documented. Every engagement is governed by a formal contract. We carry the compliance burden — so you can carry on trading.</p>
+      <a href="#" class="btn btn-gold btn-arrow" onclick="showPage('contact')">Protect Your Venue</a>
+    </div>
+    <div class="why-right">
+      <div class="compliance-visual">
+        <div class="compliance-item">
+          <div class="compliance-check">✓</div>
+          <div class="compliance-text">PSIRA Grade C+ Registration<span>All deployed staff — no exceptions</span></div>
+        </div>
+        <div class="compliance-item">
+          <div class="compliance-check">✓</div>
+          <div class="compliance-text">Criminal Background Checks<span>Full vetting before first deployment</span></div>
+        </div>
+        <div class="compliance-item">
+          <div class="compliance-check">✓</div>
+          <div class="compliance-text">Signed SLA Contract<span>12 or 24-month formal agreements</span></div>
+        </div>
+        <div class="compliance-item">
+          <div class="compliance-check">✓</div>
+          <div class="compliance-text">Monthly Incident Documentation<span>Your audit trail for every claim</span></div>
+        </div>
+        <div class="compliance-item">
+          <div class="compliance-check">✓</div>
+          <div class="compliance-text">Liquor Act Compliance<span>Capacity controls, conduct standards</span></div>
+        </div>
+        <div class="compliance-item">
+          <div class="compliance-check">✓</div>
+          <div class="compliance-text">Liability Insurance<span>We carry our staff — not you</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Differentiators -->
+  <div class="diff-grid">
+    <div class="diff-item">
+      <div class="diff-icon">🎯</div>
+      <div class="diff-head">Nightlife Specialists</div>
+      <div class="diff-body">We know the difference between a Thursday crowd and a Saturday peak. Our bouncers are briefed for your venue's specific culture — not generic guarding procedures.</div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon">⚡</div>
+      <div class="diff-head">60-Min Emergency Cover</div>
+      <div class="diff-body">No-shows happen. With us, a no-show triggers an immediate dispatch. Emergency replacement arrives within 60 minutes — guaranteed in your SLA with financial recourse.</div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon">👔</div>
+      <div class="diff-body-head" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.06em;color:var(--gold);text-transform:uppercase;margin-bottom:0.75rem;">Same Team Weekly</div>
+      <div class="diff-body">On retainer, you get the same faces every week. They know your regulars, your layout, your VIPs — an extension of your team, not a stranger at your door.</div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon">📊</div>
+      <div class="diff-head">Data-Driven Operations</div>
+      <div class="diff-body">Monthly incident reports give you visibility into your venue's security patterns — incident trends, peak risk times, and staffing recommendations. Security as a management tool.</div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon">🤝</div>
+      <div class="diff-head">Contractual Certainty</div>
+      <div class="diff-body">MSA, SLA and Statement of Work govern every engagement. No verbal agreements. No ambiguity. Clear obligations on both sides — the professional standard you deserve.</div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon">🌍</div>
+      <div class="diff-head">National Footprint</div>
+      <div class="diff-body">KZN, Gauteng and Western Cape under one brand. Multi-location venue groups get consistent service standards across every site — one contract, one account manager.</div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon">💬</div>
+      <div class="diff-head">De-Escalation First</div>
+      <div class="diff-body">All personnel trained in verbal de-escalation before physical intervention. Fewer incidents. Lower liability. A safer experience for your patrons — and your reputation.</div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon">🏆</div>
+      <div class="diff-head">Industry-Built Model</div>
+      <div class="diff-body">Bouncer VIP Express was built from the ground up for nightlife. Not a guarding company that added clubs as an afterthought. The difference is in every detail.</div>
+    </div>
+  </div>
+
+  <!-- Testimonial -->
+  <div class="testimonial-strip">
+    <div class="testimonial-text">"The moment a venue owner stops worrying about who's standing at their door — that's when they can focus on what matters: running a great venue."</div>
+    <div class="testimonial-source">Mr Thabo Fortune Ndaba — Founder &amp; CEO, Bouncer VIP Express (Pty) Ltd</div>
+  </div>
+
+  <!-- CTA -->
+  <section class="section" style="text-align:center;">
+    <div class="section-tag" style="justify-content:center;">Take the Next Step</div>
+    <h2 class="section-title">Ready to upgrade your<br><em>venue's security?</em></h2>
+    <p style="color:var(--g7);font-size:var(--fs-md);max-width:500px;margin:1.5rem auto 3rem;line-height:1.75;font-weight:300;">Request a formal proposal. No obligation. No pressure. Just a concise, professionally presented service offering tailored to your venue.</p>
+    <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+      <a href="#" class="btn btn-gold btn-arrow" onclick="showPage('contact')">Request a Proposal</a>
+      <a href="#" class="btn btn-outline" onclick="showPage('pricing')">View Pricing</a>
+    </div>
+  </section>
+
+</div><!-- end page why -->
+
+<!-- ══════════════════════════════════════════════════════════════════
+  PAGE: CONTACT
+══════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-accent"></div>
+    <div class="page-hero-content">
+      <div class="section-tag">Contact Us</div>
+      <h1 class="page-hero-title">Let's protect<br><em style="color:var(--gold);">your venue</em></h1>
+      <p class="page-hero-sub">Submit an enquiry and receive a tailored proposal within 24 hours. No obligation. No pressure.</p>
+    </div>
+  </div>
+
+  <div class="contact-layout">
+    <!-- Contact details -->
+    <div class="contact-left">
+      <div>
+        <div class="section-tag">Get in Touch</div>
+        <h2 class="section-title" style="margin-bottom:2.5rem;">We respond<br>within <em>24 hours</em></h2>
+
+        <div class="contact-details">
+          <div class="contact-detail">
+            <div class="contact-detail-icon">📞</div>
+            <div>
+              <div class="contact-detail-label">Telephone</div>
+              <div class="contact-detail-value">+27 (0) 31 000 0000</div>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">✉</div>
+            <div>
+              <div class="contact-detail-label">Email</div>
+              <div class="contact-detail-value">info@bouncervipexpress.co.za</div>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">🌐</div>
+            <div>
+              <div class="contact-detail-label">Website</div>
+              <div class="contact-detail-value">www.bouncervipexpress.co.za</div>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">📍</div>
+            <div>
+              <div class="contact-detail-label">Registered Address</div>
+              <div class="contact-detail-value">Westville, Durban<br>KwaZulu-Natal</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-offices" style="margin-top:2.5rem;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--g6);margin-bottom:1rem;">Operating Regions</div>
+          <div>
+            <span class="office-tag"><span class="office-tag-dot"></span>KwaZulu-Natal</span>
+            <span class="office-tag"><span class="office-tag-dot"></span>Gauteng</span>
+            <span class="office-tag"><span class="office-tag-dot"></span>Western Cape</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:3rem;padding:1.75rem;background:var(--g2);border:1px solid var(--g4);border-left:3px solid var(--gold);">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;">Mr Thabo Fortune Ndaba</div>
+        <div style="font-size:0.9rem;color:var(--white);font-weight:600;margin-bottom:0.25rem;">Founder &amp; Chief Executive Officer</div>
+        <div style="font-size:0.85rem;color:var(--g7);">Bouncer VIP Express (Pty) Ltd</div>
+      </div>
+    </div>
+
+    <!-- Contact form -->
+    <div class="contact-right">
+      <div style="margin-bottom:2.5rem;">
+        <div class="section-tag">Enquiry Form</div>
+        <h2 class="section-title">Request a <em>Proposal</em></h2>
+      </div>
+
+      <form class="contact-form" onsubmit="handleFormSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name *</label>
+            <input type="text" class="form-input" placeholder="Your first name" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name *</label>
+            <input type="text" class="form-input" placeholder="Your last name" required/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" class="form-input" placeholder="your@email.com" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contact Number *</label>
+            <input type="tel" class="form-input" placeholder="+27 (0) xx xxx xxxx" required/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Venue Name *</label>
+          <input type="text" class="form-input" placeholder="Trading name of your venue" required/>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Venue Type *</label>
+            <select class="form-select" required>
+              <option value="" disabled selected>Select venue type</option>
+              <option>Bar / Pub</option>
+              <option>Night Club</option>
+              <option>Lounge</option>
+              <option>Dance Venue</option>
+              <option>Adult Entertainment</option>
+              <option>Tavern</option>
+              <option>Restaurant Bar</option>
+              <option>Event / Function</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Province *</label>
+            <select class="form-select" required>
+              <option value="" disabled selected>Select province</option>
+              <option>KwaZulu-Natal</option>
+              <option>Gauteng</option>
+              <option>Western Cape</option>
+              <option>Eastern Cape</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Service Tier Interest</label>
+            <select class="form-select">
+              <option value="" disabled selected>Which tier interests you?</option>
+              <option>Economy (R1,350/bouncer/night)</option>
+              <option>Standard (R2,499/bouncer/night)</option>
+              <option>Premium (R3,999/bouncer/night)</option>
+              <option>Monthly Retainer</option>
+              <option>Not sure — advise me</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">How Many Nights/Week?</label>
+            <select class="form-select">
+              <option value="" disabled selected>Select</option>
+              <option>1–2 nights</option>
+              <option>3–4 nights</option>
+              <option>5–6 nights</option>
+              <option>7 nights</option>
+              <option>Events only</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Message / Additional Requirements</label>
+          <textarea class="form-textarea" placeholder="Tell us about your venue, current security arrangements, and any specific requirements…"></textarea>
+        </div>
+
+        <p class="form-note">By submitting this form, you consent to Bouncer VIP Express (Pty) Ltd contacting you regarding your enquiry. Your information is handled in accordance with POPIA.</p>
+
+        <button type="submit" class="btn btn-gold btn-arrow form-submit">Submit Enquiry</button>
+      </form>
+
+      <div id="formSuccess" style="display:none;margin-top:2rem;padding:2rem;background:rgba(91,173,111,0.1);border:1px solid #5BAD6F;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;color:#5BAD6F;margin-bottom:0.5rem;">✓ Enquiry Received</div>
+        <div style="font-size:0.9rem;color:var(--g7);">Thank you. We will review your enquiry and respond with a tailored proposal within 24 hours.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page contact -->
+
+<!-- ══════════════════════════════════════════════════════════════════
+  FOOTER (shown on all pages)
+══════════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand-col">
+      <div class="footer-logo-text">BOUNCER VIP EXPRESS</div>
+      <div style="font-size:var(--fs-xs);color:var(--g6);font-family:'Barlow Condensed',sans-serif;letter-spacing:0.15em;margin-bottom:1rem;">(PTY) LTD — REG. NO. [2025/XXXXXX/07]</div>
+      <p class="footer-tagline">South Africa's dedicated professional nightlife security services provider. PSIRA-certified personnel, formal SLA contracts, and documented compliance — for venues that take their operations seriously.</p>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+        <div style="padding:0.4rem 0.9rem;background:var(--golddim);border:1px solid rgba(201,168,76,0.2);font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.15em;color:var(--gold);">PSIRA ACCREDITED</div>
+        <div style="padding:0.4rem 0.9rem;background:var(--g3);border:1px solid var(--g5);font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.15em;color:var(--g8);">REGISTERED PTY LTD</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-head">Services</div>
+      <div class="footer-links">
+        <span class="footer-link" onclick="showPage('services');showService('bouncer')">Certified Bouncers</span>
+        <span class="footer-link" onclick="showPage('services');showService('crowd')">Crowd Management</span>
+        <span class="footer-link" onclick="showPage('services');showService('vip')">VIP Management</span>
+        <span class="footer-link" onclick="showPage('services');showService('compliance')">Compliance & Reporting</span>
+        <span class="footer-link" onclick="showPage('services');showService('retainer')">Retainer Contracts</span>
+        <span class="footer-link" onclick="showPage('services');showService('events')">Events & Functions</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-head">Company</div>
+      <div class="footer-links">
+        <span class="footer-link" onclick="showPage('home')">Home</span>
+        <span class="footer-link" onclick="showPage('pricing')">Pricing</span>
+        <span class="footer-link" onclick="showPage('coverage')">Coverage</span>
+        <span class="footer-link" onclick="showPage('why')">Why Us</span>
+        <span class="footer-link" onclick="showPage('contact')">Contact</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-head">Contact</div>
+      <div class="footer-links">
+        <span class="footer-link">+27 (0) 31 000 0000</span>
+        <span class="footer-link">info@bouncervipexpress.co.za</span>
+        <span class="footer-link">www.bouncervipexpress.co.za</span>
+        <span class="footer-link" style="margin-top:0.5rem;color:var(--g6);">Westville, Durban, KZN</span>
+        <span class="footer-link" style="color:var(--g6);">KZN · Gauteng · Western Cape</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-legal">© 2025–2026 Bouncer VIP Express (Pty) Ltd. All rights reserved. Reg. No. [2025/XXXXXX/07].<br>PSIRA Accredited Service Provider. All personnel PSIRA Grade C+ registered.</div>
+    <div class="footer-psira">
+      <div class="footer-psira-icon">🛡</div>
+      PSIRA Accredited · Nightlife Security Specialists
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════════════
+  JAVASCRIPT
+══════════════════════════════════════════════════════════════════ -->
+<script>
+// ── Page routing ───────────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + id);
+  if (target) { target.classList.add('active'); }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Update nav active states
+  document.querySelectorAll('[data-page]').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === id);
+  });
+
+  // Trigger scroll reveals
+  setTimeout(() => initReveal(), 100);
+  return false;
+}
+
+// ── Mobile nav ─────────────────────────────────────────────────────
+const navToggle = document.getElementById('navToggle');
+const navMobile = document.getElementById('navMobile');
+
+navToggle.addEventListener('click', () => {
+  const isOpen = navMobile.classList.toggle('open');
+  navToggle.classList.toggle('open', isOpen);
+});
+
+function closeMobile() {
+  navMobile.classList.remove('open');
+  navToggle.classList.remove('open');
+}
+
+// ── Nav scroll effect ──────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── Service tabs ───────────────────────────────────────────────────
+function showService(id) {
+  document.querySelectorAll('.service-block').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.service-nav-item').forEach(n => n.classList.remove('active'));
+  const block = document.getElementById('service-' + id);
+  if (block) block.classList.add('active');
+  event.currentTarget && event.currentTarget.classList.add('active');
+  // Find and activate matching nav item
+  document.querySelectorAll('.service-nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) {
+      n.classList.add('active');
+    }
+  });
+}
+
+// ── Region accordion ───────────────────────────────────────────────
+function toggleRegion(item) {
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.region-item').forEach(r => r.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── Scroll reveals ─────────────────────────────────────────────────
+function initReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    if (!el.classList.contains('visible')) observer.observe(el);
+  });
+}
+
+// ── Animated counters ──────────────────────────────────────────────
+function animateCounters() {
+  document.querySelectorAll('.hero-stat-num').forEach(el => {
+    const text = el.textContent;
+    const num = parseInt(text.replace(/\D/g, ''));
+    if (!num || el.dataset.animated) return;
+    el.dataset.animated = true;
+    const suffix = text.replace(/[\d,]/g, '');
+    let start = 0;
+    const duration = 1500;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * num).toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+}
+
+// ── Form submit ────────────────────────────────────────────────────
+function handleFormSubmit(e) {
+  e.preventDefault();
+  document.getElementById('formSuccess').style.display = 'block';
+  e.target.style.display = 'none';
+}
+
+// ── Click outside nav ──────────────────────────────────────────────
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('nav') && !e.target.closest('#navMobile')) {
+    closeMobile();
+  }
+});
+
+// ── Prevent default on hash links ─────────────────────────────────
+document.querySelectorAll('a[href="#"]').forEach(a => {
+  a.addEventListener('click', e => e.preventDefault());
+});
+
+// ── Init ───────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  showPage('home');
+  initReveal();
+  setTimeout(animateCounters, 400);
+});
+
+// Re-trigger on any nav click
+window.addEventListener('scroll', initReveal, { passive: true });
+</script>
+
+</body>
+</html>
