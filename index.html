@@ -10,16 +10,34 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Barlow:wght@300;400;500;600;700;800&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 /* ═══════════════════════════════════════════════
-   TOKENS
+   MOBILE-FIRST CSS FOUNDATION
 ═══════════════════════════════════════════════ */
+
+/* ═══ BASE TOKENS ═══ */
 :root{
+  /* Primary Theme - Dark Luxury */
   --gold:#C9A84C;--gold2:#E8C96A;--gold3:#F5E6B8;--golddim:rgba(201,168,76,.12);
   --red:#B5222A;--red2:#D42B35;
   --black:#080808;--ink:#0E0E0E;--g1:#111;--g2:#161616;--g3:#1e1e1e;
   --g4:#2a2a2a;--g5:#3a3a3a;--g6:#666;--g7:#999;--g8:#ccc;--white:#fff;
   --nav-h:72px;
   --ease:cubic-bezier(.16,1,.3,1);
+  
+  /* Mobile-first spacing scale */
+  --space-xs:0.5rem;
+  --space-sm:1rem;
+  --space-md:1.5rem;
+  --space-lg:2rem;
+  --space-xl:3rem;
+  --space-2xl:4rem;
+  
+  /* Breakpoints (min-width approach for progressive enhancement) */
+  --bp-sm:576px;
+  --bp-md:768px;
+  --bp-lg:1024px;
+  --bp-xl:1440px;
 }
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
 body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;line-height:1.65;overflow-x:hidden}
@@ -27,6 +45,10 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.3}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--g1)}::-webkit-scrollbar-thumb{background:var(--gold)}
 ::selection{background:var(--gold);color:var(--black)}
+
+/* Skip to content - Accessibility */
+.skip-link{position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--black);padding:.75rem 1.5rem;z-index:9999;font-weight:600;text-decoration:none;transition:top .3s}
+.skip-link:focus{top:0}
 
 /* ═══ NAV ═══ */
 nav{position:fixed;top:0;left:0;right:0;z-index:900;height:var(--nav-h);display:flex;align-items:center;
@@ -400,39 +422,118 @@ footer{background:var(--black);border-top:1px solid var(--g3);padding:4rem clamp
 .venue-type-bar{width:28px;height:2px;background:var(--gold);transition:width .4s var(--ease)}
 .venue-type-item:hover .venue-type-bar{width:100%}
 
-/* ═══ RESPONSIVE ═══ */
-@media(max-width:1100px){
-  .nav-links,.nav-cta{display:none}
-  .nav-toggle{display:flex}
-  .services-layout{grid-template-columns:1fr}
-  .services-nav{position:static;padding:2rem clamp(1.5rem,4vw,4rem);flex-direction:row;flex-wrap:wrap;border-bottom:1px solid var(--g4)}
-  .services-content{padding:2.5rem clamp(1.5rem,4vw,4rem);border-left:none}
+/* ═══ VIP APP PAGE ═══ */
+.app-mockup-container{display:flex;justify-content:center;padding:2rem 0;margin-bottom:2rem}
+.app-mockup{background:var(--g2);border:1px solid var(--gold);border-radius:28px;padding:10px;width:280px;box-shadow:0 25px 50px rgba(0,0,0,.5),0 0 30px rgba(201,168,76,.1)}
+.app-screen{background:var(--g1);border-radius:20px;overflow:hidden}
+.app-header-bar{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem;background:var(--g2);border-bottom:1px solid var(--g4)}
+.app-status-dot{width:8px;height:8px;border-radius:50%;background:#5BAD6F;animation:pulse 2s infinite}
+.app-content{padding:1.2rem}
+.app-welcome{font-size:.7rem;color:var(--g6);margin-bottom:.2rem}
+.app-venue-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.95rem;color:var(--gold);margin-bottom:1rem}
+.app-status-card{background:var(--g2);border:1px solid var(--g4);border-radius:10px;padding:.9rem;margin-bottom:1rem}
+.app-stat-row{display:flex;justify-content:space-between;font-size:.75rem;color:var(--g7);padding:.3rem 0}
+.app-stat-row:not(:last-child){border-bottom:1px solid var(--g3)}
+.app-stat-val{font-weight:600;color:var(--white)}
+.app-quick-actions{display:flex;flex-direction:column;gap:.5rem}
+.app-action-btn{background:var(--golddim);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:.7rem;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:600;color:var(--gold);letter-spacing:.05em}
+
+.vipapp-features{display:grid;grid-template-columns:1fr;gap:1.5rem}
+@media(min-width:768px){.vipapp-features{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.vipapp-features{grid-template-columns:repeat(3,1fr)}}
+.vipapp-feature{background:var(--g2);border:1px solid var(--g4);padding:2rem 1.8rem;transition:border-color .3s,transform .3s var(--ease)}
+.vipapp-feature:hover{border-color:var(--gold);transform:translateY(-4px)}
+.vipapp-feature-icon{font-size:2rem;margin-bottom:1.2rem}
+.vipapp-feature-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.vipapp-feature-desc{font-size:.88rem;color:var(--g7);line-height:1.6}
+
+/* ═══ ECOSYSTEM PAGE ═══ */
+.ecosystem-diagram{position:relative;min-height:400px;display:flex;align-items:center;justify-content:center;margin:3rem 0}
+.ecosystem-center{position:relative;z-index:10;background:var(--g2);border:2px solid var(--gold);border-radius:16px;padding:2rem;text-align:center;width:200px}
+.ecosystem-center-icon{font-size:2.5rem;margin-bottom:.5rem}
+.ecosystem-center-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
+.ecosystem-center-sub{font-size:.72rem;color:var(--g6);margin-top:.3rem}
+
+.ecosystem-orb{position:absolute}
+.ecosystem-orb-1{top:10%;left:15%}
+.ecosystem-orb-2{top:10%;right:15%}
+.ecosystem-orb-3{bottom:10%;left:15%}
+.ecosystem-orb-4{bottom:10%;right:15%}
+
+.ecosystem-node{background:var(--g2);border:1px solid var(--g4);border-radius:12px;padding:1.2rem;text-align:center;width:150px;transition:border-color .3s}
+.ecosystem-node:hover{border-color:var(--gold)}
+.ecosystem-node-icon{font-size:1.5rem;margin-bottom:.5rem}
+.ecosystem-node-title{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.75rem;letter-spacing:.05em;color:var(--gold);margin-bottom:.3rem}
+.ecosystem-node-desc{font-size:.65rem;color:var(--g6);line-height:1.4}
+
+@media(max-width:768px){
+  .ecosystem-diagram{min-height:800px}
+  .ecosystem-orb{position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;display:block;text-align:center;margin:1rem 0}
+}
+
+.ecosystem-components{display:grid;grid-template-columns:1fr;gap:1.5rem;margin-top:3rem}
+@media(min-width:768px){.ecosystem-components{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.ecosystem-components{grid-template-columns:repeat(4,1fr)}}
+.ecosystem-card{background:var(--g2);border:1px solid var(--g4);padding:2rem 1.5rem;position:relative;transition:border-color .3s,transform .3s var(--ease)}
+.ecosystem-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.ecosystem-card-badge{position:absolute;top:0;left:0;right:0;padding:.25rem;background:var(--golddim);border-bottom:1px solid rgba(201,168,76,.3);font-family:'Barlow Condensed',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);text-align:center}
+.ecosystem-card-icon{font-size:2rem;margin-bottom:1.2rem;margin-top:1.5rem}
+.ecosystem-card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.05em;color:var(--white);margin-bottom:.6rem}
+.ecosystem-card-desc{font-size:.82rem;color:var(--g7);line-height:1.6;margin-bottom:1rem}
+.ecosystem-card-timeline{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.15em;color:var(--gold);text-transform:uppercase}
+
+/* ═══ RESPONSIVE — MOBILE-FIRST APPROACH ═══ */
+
+/* Base mobile styles (320px+) */
+@media (min-width:576px){
+  /* Small devices (landscape phones) */
+  .cov-stats{grid-template-columns:1fr 1fr}
+  .svc-feat-grid{grid-template-columns:1fr}
+}
+
+@media (min-width:768px){
+  /* Tablet styles */
+  :root{--nav-h:68px}
+  .grid2{grid-template-columns:repeat(2,1fr)}
+  .form-row{grid-template-columns:1fr 1fr}
   .nightly-grid{grid-template-columns:1fr 1fr}
   .retainer-grid{grid-template-columns:1fr}
-  .coverage-layout{grid-template-columns:1fr}
-  .cov-left{border-bottom:1px solid var(--g4)}
   .diff-grid{grid-template-columns:1fr 1fr}
-  .why-split{grid-template-columns:1fr}
-  .why-right{min-height:auto;border-left:none;border-top:1px solid var(--g4);justify-content:flex-start}
-  .contact-layout{grid-template-columns:1fr}
-  .contact-left{border-right:none;border-bottom:1px solid var(--g4)}
   .footer-top{grid-template-columns:1fr 1fr;gap:2rem}
-  .grid3{grid-template-columns:1fr 1fr}
-  .grid4{grid-template-columns:1fr 1fr}
-  .slide-badge{display:none}
+  .slide-badge{display:block}
+  .nav-toggle{display:none}
+  .nav-links,.nav-cta{display:flex}
+  .nav-mobile{display:none!important}
 }
-@media(max-width:680px){
-  :root{--nav-h:60px}
-  .nightly-grid{grid-template-columns:1fr}
-  .grid2,.grid3,.grid4{grid-template-columns:1fr}
-  .diff-grid{grid-template-columns:1fr}
-  .svc-feat-grid{grid-template-columns:1fr}
-  .cov-stats{grid-template-columns:1fr}
-  .form-row{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr;gap:1.8rem}
-  .footer-bottom{flex-direction:column;text-align:center}
-  .cmp-table{font-size:.78rem}
-  .cmp-table th,.cmp-table td{padding:.7rem}
+
+@media (min-width:1024px){
+  /* Desktop styles */
+  :root{--nav-h:72px}
+  .services-layout{grid-template-columns:1fr 2.2fr}
+  .services-nav{position:sticky;top:calc(var(--nav-h) + 2rem);padding:3rem 3rem 3rem clamp(1.5rem,7vw,7rem);flex-direction:column}
+  .services-content{padding:4rem clamp(1.5rem,5vw,5rem) 4rem 0;border-left:1px solid var(--g4)}
+  .nightly-grid{grid-template-columns:repeat(4,1fr)}
+  .retainer-grid{grid-template-columns:repeat(3,1fr)}
+  .coverage-layout{grid-template-columns:1fr 1.2fr}
+  .cov-left{border-bottom:0;border-right:1px solid var(--g4)}
+  .why-split{grid-template-columns:1.2fr 1fr}
+  .why-right{min-height:auto;border-left:1px solid var(--g4);border-top:0;justify-content:center}
+  .contact-layout{grid-template-columns:1fr 1.6fr}
+  .contact-left{border-right:1px solid var(--g4);border-bottom:0}
+  .footer-top{grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3.5rem}
+  .grid3{grid-template-columns:repeat(3,1fr)}
+  .grid4{grid-template-columns:repeat(4,1fr)}
+}
+
+@media (min-width:1440px){
+  /* Large desktop styles */
+  .container{max-width:1400px;margin:0 auto}
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
 }
 </style>
 </head>
@@ -456,17 +557,18 @@ footer{background:var(--black);border-top:1px solid var(--g3);padding:4rem clamp
   <ul class="nav-links">
     <li><a href="#" onclick="showPage('home')" data-page="home">Home</a></li>
     <li><a href="#" onclick="showPage('services')" data-page="services">Services</a></li>
-    <li><a href="#" onclick="showPage('pricing')" data-page="pricing">Pricing</a></li>
+    <li><a href="#" onclick="showPage('vipapp')" data-page="vipapp">VIP App</a></li>
+    <li><a href="#" onclick="showPage('ecosystem')" data-page="ecosystem">Ecosystem</a></li>
     <li><a href="#" onclick="showPage('coverage')" data-page="coverage">Coverage</a></li>
-    <li><a href="#" onclick="showPage('why')" data-page="why">Why Us</a></li>
     <li><a href="#" onclick="showPage('contact')" class="nav-cta" data-page="contact">Get a Quote</a></li>
   </ul>
-  <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
-<div class="nav-mobile" id="navMobile">
+<div class="nav-mobile" id="navMobile" role="navigation" aria-label="Mobile navigation">
   <a href="#" onclick="showPage('home');closeMob()">Home</a>
   <a href="#" onclick="showPage('services');closeMob()">Services</a>
-  <a href="#" onclick="showPage('pricing');closeMob()">Pricing</a>
+  <a href="#" onclick="showPage('vipapp');closeMob()">VIP App</a>
+  <a href="#" onclick="showPage('ecosystem');closeMob()">Ecosystem</a>
   <a href="#" onclick="showPage('coverage');closeMob()">Coverage</a>
   <a href="#" onclick="showPage('why');closeMob()">Why Us</a>
   <a href="#" onclick="showPage('contact');closeMob()" class="mob-cta">Get a Quote →</a>
@@ -1315,6 +1417,220 @@ footer{background:var(--black);border-top:1px solid var(--g3);padding:4rem clamp
 </div>
 
 <!-- ═══════════════════════════════════════════
+  PAGE: VIP APP
+═══════════════════════════════════════════ -->
+<div class="page" id="page-vipapp">
+  <div class="page-hero">
+    <div class="page-hero-bg"></div><div class="page-hero-accent"></div>
+    <div class="page-hero-content">
+      <div class="section-tag">Coming Soon</div>
+      <h1 class="page-hero-title">The Bouncer VIP<br><em style="color:var(--gold)">Express App</em></h1>
+      <p class="page-hero-sub">Your security dashboard in your pocket. Real-time visibility, instant dispatch and compliance documentation — all from your mobile device.</p>
+    </div>
+  </div>
+  
+  <!-- App Preview Section -->
+  <section class="section section-alt" style="text-align:center">
+    <div class="section-tag" style="justify-content:center">Launching 2025</div>
+    <h2 class="section-title">Security management,<br><em>reimagined</em></h2>
+    <p style="color:var(--g7);font-size:1.05rem;max-width:580px;margin:1.3rem auto 3rem;line-height:1.75;font-weight:300">The Bouncer VIP Express mobile application brings the same professionalism and compliance focus from our on-site teams directly to your smartphone.</p>
+    
+    <!-- App Mockup Placeholder -->
+    <div class="app-mockup-container">
+      <div class="app-mockup">
+        <div class="app-screen">
+          <div class="app-header-bar">
+            <span class="app-status-dot"></span>
+            <span style="font-size:.65rem;font-family:'Barlow Condensed',sans-serif;color:var(--g7)">Bouncer VIP Express</span>
+            <span style="font-size:.65rem;color:var(--gold)">● LIVE</span>
+          </div>
+          <div class="app-content">
+            <div class="app-welcome">Welcome back</div>
+            <div class="app-venue-name">Club Neo · Gold Tier</div>
+            <div class="app-status-card">
+              <div class="app-stat-row">
+                <span>Active Bouncers</span>
+                <span class="app-stat-val">6 / 8</span>
+              </div>
+              <div class="app-stat-row">
+                <span>Tonight's Status</span>
+                <span class="app-stat-val" style="color:#5BAD6F">All Clear</span>
+              </div>
+              <div class="app-stat-row">
+                <span>Incidents Today</span>
+                <span class="app-stat-val">2 Minor</span>
+              </div>
+            </div>
+            <div class="app-quick-actions">
+              <div class="app-action-btn">Emergency Dispatch</div>
+              <div class="app-action-btn">View Reports</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- App Features -->
+  <section class="section">
+    <div class="vipapp-features">
+      <div class="vipapp-feature reveal">
+        <div class="vipapp-feature-icon">📊</div>
+        <div class="vipapp-feature-title">Real-Time Dashboard</div>
+        <div class="vipapp-feature-desc">Monitor active deployments, personnel counts and incident reports in real-time from any location.</div>
+      </div>
+      <div class="vipapp-feature reveal reveal-d1">
+        <div class="vipapp-feature-icon">⚡</div>
+        <div class="vipapp-feature-title">Instant Dispatch</div>
+        <div class="vipapp-feature-desc">Request emergency cover or surge staffing with a single tap. Our dispatch team responds within minutes.</div>
+      </div>
+      <div class="vipapp-feature reveal reveal-d2">
+        <div class="vipapp-feature-icon">📋</div>
+        <div class="vipapp-feature-title">Digital Compliance</div>
+        <div class="vipapp-feature-desc">Access shift logs, incident reports and PSiRA certificates on-demand. Your compliance documentation, always at hand.</div>
+      </div>
+      <div class="vipapp-feature reveal reveal-d3">
+        <div class="vipapp-feature-icon">🔔</div>
+        <div class="vipapp-feature-title">Smart Notifications</div>
+        <div class="vipapp-feature-desc">Receive alerts for no-shows, SLA breaches, shift changes and compliance deadlines before they become problems.</div>
+      </div>
+      <div class="vipapp-feature reveal reveal-d4">
+        <div class="vipapp-feature-icon">📱</div>
+        <div class="vipapp-feature-title">Venue Management</div>
+        <div class="vipapp-feature-desc">Manage multiple venue profiles, track performance metrics and compare service tiers across your operation.</div>
+      </div>
+      <div class="vipapp-feature reveal reveal-d4">
+        <div class="vipapp-feature-icon">💬</div>
+        <div class="vipapp-feature-title">Direct Communication</div>
+        <div class="vipapp-feature-desc">Direct line to your assigned team leader. In-app messaging, call logging and escalation protocols built in.</div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- App CTA -->
+  <section class="section section-alt" style="text-align:center">
+    <div style="max-width:600px;margin:0 auto">
+      <div class="section-tag" style="justify-content:center">Be First</div>
+      <h2 class="section-title">Join the <em>early access</em> list</h2>
+      <p style="color:var(--g7);font-size:1.05rem;line-height:1.75;font-weight:300;margin-bottom:2.5rem">Be among the first venue owners and managers to experience the Bouncer VIP Express application. Register your interest for early access.</p>
+      <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap">
+        <a href="#" class="btn btn-gold btn-arr" onclick="showPage('contact')">Register Interest</a>
+        <a href="#" class="btn btn-outline" onclick="showPage('services')">Learn More</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  PAGE: ECOSYSTEM
+═══════════════════════════════════════════ -->
+<div class="page" id="page-ecosystem">
+  <div class="page-hero">
+    <div class="page-hero-bg"></div><div class="page-hero-accent"></div>
+    <div class="page-hero-content">
+      <div class="section-tag">The Ecosystem</div>
+      <h1 class="page-hero-title">Beyond security.<br><em style="color:var(--gold)">A complete solution.</em></h1>
+      <p class="page-hero-sub">Bouncer VIP Express is building a comprehensive ecosystem of tools, partnerships and integrations designed specifically for South Africa's nightlife industry.</p>
+    </div>
+  </div>
+  
+  <!-- Ecosystem Overview -->
+  <section class="section">
+    <div style="max-width:900px;margin:0 auto">
+      <div class="section-tag">Integrated Solutions</div>
+      <h2 class="section-title">Everything your venue needs,<br><em>connected</em></h2>
+      <p style="color:var(--g7);font-size:1.05rem;line-height:1.75;font-weight:300;margin-top:1.5rem;margin-bottom:3rem">Our ecosystem approach means your security provider, compliance tools, and venue management systems work together seamlessly — reducing administrative burden and increasing operational visibility.</p>
+      
+      <!-- Ecosystem Diagram -->
+      <div class="ecosystem-diagram">
+        <div class="ecosystem-center">
+          <div class="ecosystem-center-icon">🏛</div>
+          <div class="ecosystem-center-title">Bouncer VIP Express</div>
+          <div class="ecosystem-center-sub">Your Core Partner</div>
+        </div>
+        <div class="ecosystem-orb ecosystem-orb-1">
+          <div class="ecosystem-node">
+            <div class="ecosystem-node-icon">🛡</div>
+            <div class="ecosystem-node-title">Security Services</div>
+            <div class="ecosystem-node-desc">PSiRA-certified bouncers, SLA-backed deployments</div>
+          </div>
+        </div>
+        <div class="ecosystem-orb ecosystem-orb-2">
+          <div class="ecosystem-node">
+            <div class="ecosystem-node-icon">📱</div>
+            <div class="ecosystem-node-title">VIP Express App</div>
+            <div class="ecosystem-node-desc">Real-time dashboard, instant dispatch, digital compliance</div>
+          </div>
+        </div>
+        <div class="ecosystem-orb ecosystem-orb-3">
+          <div class="ecosystem-node">
+            <div class="ecosystem-node-icon">📊</div>
+            <div class="ecosystem-node-title">Compliance Hub</div>
+            <div class="ecosystem-node-desc">Document management, audit trails, reporting</div>
+          </div>
+        </div>
+        <div class="ecosystem-orb ecosystem-orb-4">
+          <div class="ecosystem-node">
+            <div class="ecosystem-node-icon">🤝</div>
+            <div class="ecosystem-node-title">Venue Network</div>
+            <div class="ecosystem-node-desc">Industry partnerships, referral programme, bulk rates</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Ecosystem Components -->
+  <section class="section section-alt">
+    <div class="section-tag">Coming Soon</div>
+    <h2 class="section-title">Building the future<br><em>of nightlife security</em></h2>
+    <div class="ecosystem-components">
+      <div class="ecosystem-card reveal">
+        <div class="ecosystem-card-badge">In Development</div>
+        <div class="ecosystem-card-icon">🔗</div>
+        <div class="ecosystem-card-title">POS Integration</div>
+        <div class="ecosystem-card-desc">Seamless integration with leading point-of-sale systems to correlate busy trading periods with staffing levels and incident data.</div>
+        <div class="ecosystem-card-timeline">Q4 2025</div>
+      </div>
+      <div class="ecosystem-card reveal reveal-d1">
+        <div class="ecosystem-card-badge">In Development</div>
+        <div class="ecosystem-card-icon">🎥</div>
+        <div class="ecosystem-card-title">CCTV Partnership</div>
+        <div class="ecosystem-card-desc">Preferred partnership with verified CCTV providers who understand nightlife environments and can respond to emergency callouts.</div>
+        <div class="ecosystem-card-timeline">Q4 2025</div>
+      </div>
+      <div class="ecosystem-card reveal reveal-d2">
+        <div class="ecosystem-card-badge">In Development</div>
+        <div class="ecosystem-card-icon">📝</div>
+        <div class="ecosystem-card-title">Digital Incident Forms</div>
+        <div class="ecosystem-card-desc">Standardised digital incident documentation that integrates directly with SAPS and liquor board reporting requirements.</div>
+        <div class="ecosystem-card-timeline">Q1 2026</div>
+      </div>
+      <div class="ecosystem-card reveal reveal-d3">
+        <div class="ecosystem-card-badge">In Development</div>
+        <div class="ecosystem-card-icon">🏆</div>
+        <div class="ecosystem-card-title">Venue Awards Programme</div>
+        <div class="ecosystem-card-desc">Annual recognition programme for venues demonstrating excellence in safety, compliance and patron experience within our network.</div>
+        <div class="ecosystem-card-timeline">Q2 2026</div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Ecosystem CTA -->
+  <section class="section" style="text-align:center">
+    <div style="max-width:600px;margin:0 auto">
+      <div class="section-tag" style="justify-content:center">Join the Network</div>
+      <h2 class="section-title">Be part of<br><em>the ecosystem</em></h2>
+      <p style="color:var(--g7);font-size:1.05rem;line-height:1.75;font-weight:300;margin-bottom:2.5rem">Venue owners and industry partners are invited to join our early ecosystem programme. Shape the future of nightlife security in South Africa.</p>
+      <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap">
+        <a href="#" class="btn btn-gold btn-arr" onclick="showPage('contact')">Partner With Us</a>
+        <a href="#" class="btn btn-outline" onclick="showPage('coverage')">View Coverage</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════════════════════
   FOOTER
 ═══════════════════════════════════════════ -->
 <footer>
@@ -1343,9 +1659,11 @@ footer{background:var(--black);border-top:1px solid var(--g3);padding:4rem clamp
       <div class="footer-col-head">Company</div>
       <div class="footer-links">
         <span class="footer-link" onclick="showPage('home')">Home</span>
+        <span class="footer-link" onclick="showPage('services')">Services</span>
+        <span class="footer-link" onclick="showPage('vipapp')">VIP App</span>
+        <span class="footer-link" onclick="showPage('ecosystem')">Ecosystem</span>
         <span class="footer-link" onclick="showPage('pricing')">Pricing</span>
         <span class="footer-link" onclick="showPage('coverage')">Coverage</span>
-        <span class="footer-link" onclick="showPage('why')">Why Us</span>
         <span class="footer-link" onclick="showPage('contact')">Contact</span>
       </div>
     </div>
